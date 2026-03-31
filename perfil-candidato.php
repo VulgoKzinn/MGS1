@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body id="bodypgs">
     <?php include "assets/templates/headerMGS.php"; ?>
 
     <main class="container mt-4">

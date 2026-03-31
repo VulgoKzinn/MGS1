@@ -17,7 +17,7 @@
    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body id="bodypgs">
     <?php require_once "assets/templates/headerMGS.php" ?>
    <main class="container mt-4">
       <!-- PERFIL -->
