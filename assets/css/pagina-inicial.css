@@ -76,3 +76,9 @@ body {
     background: #ff3333;
     color: white;
 }
+.card-vaga {
+    max-width: 900px;   /* controla a largura */
+    margin: 0 auto;     /* centraliza */
+    border-radius: 20px;
+    overflow: hidden;
+}
