@@ -129,7 +129,7 @@
                   <label class="form-label text-light">Salário</label>
                   <div class="form-control custom-box">A Combinar</div>
                </div>
-
+               
                <div class="col-md-6">
                   <label class="form-label text-light">Benefícios</label>
                   <div class="form-control custom-box">
