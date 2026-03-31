@@ -85,3 +85,10 @@ body {
 .conteudo-extra {
     display: none;
 }
+.btn-ler-mais {
+    border-radius: 50px;
+    max-width: 120px;
+    width: 100%;
+    font-size: 13px;
+    padding: 5px 10px;
+}

@@ -6,36 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="assets/css/pagina-inicial.css">
-<<<<<<< Updated upstream
-   <!-- Include Links -->
-   <?php
-   require_once 'assets/templates/head.php';
-   ?></head>
-=======
-
-    <link rel="shortcut icon" href="assets/img/logo.svg">
-    <link rel="stylesheet" href="assets/css/perfil-empresa.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Include Links -->
     <?php
     require_once 'assets/templates/head.php';
     ?>
-
 </head>
->>>>>>> Stashed changes
 
 <body>
 
-    <?php require_once "assets/templates/header_GUI.php" ?>
+    <?php require_once "assets/templates/headerMGS.php" ?>
 
     <div class="container mt-4">
 
         <div class="card-vaga">
 
             <div class="header">
-                <img src="img/sabesp.png" class="logo">
+                <img src="./assets/img/sabesp-companhia-de-saneamento-basico-do-estado-de-sao-paulo 1.png" class="logo">
                 <h5 class="m-0">SABESP - SP</h5>
             </div>
 
@@ -43,7 +29,7 @@
                 <h5>Vaga: Leiturista – SABESP</h5>
 
                 <p>
-                    A SABESP está em busca de um profissional responsável...
+                    A SABESP está em busca de um profissional responsável e comprometido para atuar como Leiturista. A função consiste na leitura e registro do consumo de água nos hidrômetros, conferência de dados, identificação de irregularidades e orientação básica aos clientes quando necessário. É importante ter atenção aos detalhes, boa organização, disposição para trabalho externo e compromisso com prazos e qualidade das informações coletadas.
                 </p>
 
                 <div class="conteudo-extra" id="conteudoExtra">
@@ -71,14 +57,14 @@
                     <p>12 por 36</p>
                 </div>
 
-                <button class="btn btn-light mt-2" onclick="toggleTexto()" id="btnLerMais">
-                    Ler mais
+                <button class="btn btn-light mt-2 btn-ler-mais" onclick="toggleTexto()" id="btnLerMais">
+                Ler mais
                 </button>
 
                 <img src="./assets/img/image 2.jpg" class="imagem">
             </div>
 
-            
+
 
 
             <form class="acoes">
@@ -98,13 +84,6 @@
         function toggleTexto() {
             let conteudo = document.getElementById("conteudoExtra");
             let botao = document.getElementById("btnLerMais");
-
-<<<<<<< Updated upstream
-   <!-- Include JS -->
-   <?php
-   require_once 'assets/templates/js.php';
-   ?>
-=======
             if (conteudo.style.display === "none" || conteudo.style.display === "") {
                 conteudo.style.display = "block";
                 botao.innerText = "Ler menos";
@@ -114,7 +93,13 @@
             }
         }
     </script>
->>>>>>> Stashed changes
+    <!-- Include JS -->
+    <?php
+    require_once 'assets/templates/js.php';
+    ?>
+
+
+
 
 </body>
 
