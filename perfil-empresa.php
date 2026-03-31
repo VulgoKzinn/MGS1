@@ -18,6 +18,7 @@
 </head>
 
 <body>
+    <?php require_once "assets/templates/headerMGS.php" ?>
    <main class="container mt-4">
       <!-- PERFIL -->
       <div class="position-relative">

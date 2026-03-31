@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <?php include "assets/templates/header_pedro.php"; ?>
+    <?php include "assets/templates/headerMGS.php"; ?>
 
     <main class="container mt-4">
 
