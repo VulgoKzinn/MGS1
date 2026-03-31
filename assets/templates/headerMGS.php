@@ -30,17 +30,14 @@
 
                 <li class="nav-item">
                     <a class="nav-link fw-semibold text-warning" href="#">
-                        🔥 Matches
+                         Matches
                     </a>
                 </li>
 
                 <li class="nav-item position-relative">
                     <a class="nav-link text-dark" href="#">
-                        🔔
+                        <i class="fa-solid fa-bell" style="color: rgb(103,80,164);"></i>
                     </a>
-
-                    <!-- Badge notificação -->
-                    <span class="notification-badge"></span>
                 </li>
 
             </ul>
