@@ -23,7 +23,7 @@
         <div class="card border-0 shadow-sm overflow-hidden">
             <div class="banner position-relative">
 
-                <a href="editar-perfil-candidato.html" class="btn-config" title="Configurações">
+                <a href="editar-perfil-candidato.php" class="btn-config" title="Configurações">
                     <i class="bi bi-gear-fill"></i>
                 </a>
 
@@ -78,8 +78,9 @@
         </div>
 
 <div class="Certificaos">
-    <h2>Certificados</h2>
-
+<br><br>
+    <h1>CERTIFICADOS</h1>
+<br><br>
     <div id="carouselCertificados" class="carousel slide"
          data-bs-ride="carousel"
          data-bs-interval="2500"
