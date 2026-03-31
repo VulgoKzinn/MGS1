@@ -82,3 +82,6 @@ body {
     border-radius: 20px;
     overflow: hidden;
 }
+.conteudo-extra {
+    display: none;
+}
