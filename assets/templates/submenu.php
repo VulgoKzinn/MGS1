@@ -29,7 +29,7 @@ if ($acao === 'logout') {
 
 
 <div class="dropdown">
-    <a href="#" class="user-icon" data-bs-toggle="dropdown">
+    <a href="#" class="nav-item" data-bs-toggle="dropdown">
         <i class="fa-solid fa-user" style= "color: rgb(103,80,164);"></i>
     </a>
 

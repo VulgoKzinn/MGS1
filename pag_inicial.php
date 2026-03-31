@@ -12,7 +12,7 @@
     ?>
 </head>
 
-<body>
+<body id="bodypgs">
 
     <?php require_once "assets/templates/headerMGS.php" ?>
 
@@ -20,7 +20,7 @@
 
         <div class="card-vaga">
 
-            <div class="header">
+            <div class="headerVaga">
                 <img src="./assets/img/sabesp-companhia-de-saneamento-basico-do-estado-de-sao-paulo 1.png" class="logo">
                 <h5 class="m-0">SABESP - SP</h5>
             </div>
@@ -78,8 +78,6 @@
 
     <footer></footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
     <script>
         function toggleTexto() {
             let conteudo = document.getElementById("conteudoExtra");
