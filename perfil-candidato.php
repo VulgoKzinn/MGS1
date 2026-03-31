@@ -45,37 +45,101 @@
                         suporte técnico e design gráfico.
                     </p>
 
-                  <h5 class="fw-bold mt-4">Certificados</h5>
-                    <div class="d-flex flex-wrap gap-2">
-                        <span class="badge badge-custom">JavaScript</span>
-                        <span class="badge badge-custom">PHP</span>
-                        <span class="badge badge-custom">CSS</span>
-                        <span class="badge badge-custom">HTML</span>
-                        <span class="badge badge-custom">Photoshop</span>
+                  <h5 class="fw-bold mt-4 mb-3 titulo-roxo-contato">Certificados</h5>
+
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <span class="badge badge-custom fs-6">JavaScript</span>
+                        <span class="badge badge-custom fs-6">PHP</span>
+                        <span class="badge badge-custom fs-6">CSS</span>
+                        <span class="badge badge-custom fs-6">HTML</span>
+                        <span class="badge badge-custom fs-6">Photoshop</span>
                     </div>
 
-                    <div class="mt-4 info-contato">
-                        <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> pedro.c.azevedo@email.com</p>
-                        <p class="mb-0"><i class="bi bi-whatsapp me-2"></i> (19) 99999-9999</p>
+                                    <div class="mt-4 info-contato-expandida">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-envelope-at-fill fs-4 me-3"></i>
+                            <span>pedro.c.azevedo@email.com</span>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-whatsapp fs-4 me-3"></i>
+                            <span>(19) 99999-9999</span>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bi bi-geo-alt-fill fs-4 me-3"></i>
+                            <span>CEP: 13870-000 • São João da Boa Vista - SP</span>
+                        </div>
                     </div>
 
-                    <button class="btn btn-custom w-100 mt-3">
-                        <i class="bi bi-chat-dots-fill me-2"></i> Entrar em contato
-                    </button>
-                                </aside>
+                    <a href="https://wa.me/5519999999999" target="_blank" class="btn btn-custom-lg w-100 py-3 shadow">
+                        <i class="bi bi-chat-left-dots-fill me-2"></i> 
+                        CONVERSAR NO WHATSAPP
+                    </a>
 
-            <section class="col-md-8">
-                <div class="card p-4 shadow-sm border-0">
-                    <h5 class="fw-bold mb-3">Experiência</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">💻 Desenvolvimento de sistemas web.</li>
-                        <li class="mb-2">🖥 Manutenção de computadores.</li>
-                        <li class="mb-2">🎨 Edição de imagens utilizando Photoshop.</li>
-                    </ul>
-                    <hr>
-                    <h5 class="fw-bold mt-3">Habilidades Principais</h5>
-                    <p class="text-muted">HTML • CSS • JavaScript • PHP • Photoshop</p>
                 </div>
+                    </aside>
+
+         <section class="col-md-8">
+    <div class="card p-4 shadow-sm border-0 h-100">
+        <h5 class="fw-bold mb-3 titulo-roxo-curto">Experiência</h5>
+        <ul class="list-unstyled">
+            <li class="mb-3 d-flex align-items-center">
+                <span class="icone-roxo me-3"><i class="bi bi-code-slash"></i></span>
+                <div>
+                    <strong>Desenvolvimento Web:</strong> 
+                    Criação de interfaces responsivas e sistemas dinâmicos.
+                </div>
+            </li>
+            <li class="mb-3 d-flex align-items-center">
+                <span class="icone-roxo me-3"><i class="bi bi-pc-display"></i></span>
+                <div>
+                    <strong>Suporte & Manutenção:</strong> 
+                    Diagnóstico de hardware e configuração de redes/sistemas.
+                </div>
+            </li>
+            <li class="mb-3 d-flex align-items-center">
+                <span class="icone-roxo me-3"><i class="bi bi-palette"></i></span>
+                <div>
+                    <strong>Design Gráfico:</strong> 
+                    Edição profissional e criação de identidades visuais.
+                </div>
+            </li>
+        </ul>
+
+        <hr class="my-4">
+
+      <h5 class="fw-bold mb-3 titulo-roxo-curto">Projetos Recentes</h5>
+
+            <div class="projeto-card p-3 mb-3 shadow-sm">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">🍔</span>
+                    <h6 class="fw-bold mb-0 text-dark">Sistema Hamburgueria Online</h6>
+                </div>
+                <p class="text-muted small mb-3">
+                    Desenvolvimento de uma plataforma completa de cardápio digital e gestão de pedidos. O sistema permite a personalização de combos, escolha de pontos da carne e integração direta para pedidos.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-light text-dark border">PHP 8</span>
+                    <span class="badge bg-light text-dark border">MySQL</span>
+                    <span class="badge bg-light text-dark border">JavaScript</span>
+                </div>
+            </div>
+
+        <hr class="my-4">
+
+        <h5 class="fw-bold mt-3 mb-3 titulo-roxo-curto">Habilidades & Tecnologias</h5>
+        <div class="habilidades-grid d-flex flex-wrap gap-2">
+            <span class="habilidade-tag">HTML5</span>
+            <span class="habilidade-tag">CSS3</span>
+            <span class="habilidade-tag">JavaScript (ES6+)</span>
+            <span class="habilidade-tag">PHP / MySQL</span>
+            <span class="habilidade-tag">Bootstrap 5</span>
+            <span class="habilidade-tag">Adobe Photoshop</span>
+            <span class="habilidade-tag">Git / GitHub</span>
+        </div>
+    </div>
+</section>
             </section>
         </div>
 
