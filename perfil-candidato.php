@@ -74,9 +74,9 @@
             </section>
         </div>
 
-<div class="Certificaos">
-<br><br>
+<div class="Certificados-header">
     <h1>CERTIFICADOS</h1>
+</div>
 <br><br>
     <div id="carouselCertificados" class="carousel slide"
          data-bs-ride="carousel"
@@ -134,11 +134,64 @@
 
     </div>
 </div>
+
+        <div class="certificados-list">
+
+            <section class="row align-items-center mb-5 section-item">
+                <div class="col-md-7">
+                    <h2 class="titulo-roxo">HTML5</h2>
+                    <p class="texto-descricao">"Especializei-me na fundação da web moderna com HTML5 Semântico. Durante minha formação, aprendi a construir estruturas robustas e otimizadas para SEO, garantindo que o conteúdo seja acessível tanto para usuários quanto para motores de busca. Dominei o uso de tags estruturais, formulários inteligentes e a integração de mídias nativas."</p>
+                </div>
+                <div class="col-md-5 text-center">
+                    <img src="assets/img/perfil-candidato/Gemini_Generated_Image_xrk13gxrk13gxrk1.png" class="img-fluid certificado-img" alt="Certificado HTML5">
+                </div>
+            </section>
+
+            <section class="row align-items-center mb-5 section-item">
+                <div class="col-md-5 text-center order-last order-md-first">
+                    <img src="assets/img/perfil-candidato/Gemini_Generated_Image_ha8bw0ha8bw0ha8b.png" class="img-fluid certificado-img" alt="Certificado CSS3">
+                </div>
+                <div class="col-md-7">
+                    <h2 class="titulo-roxo">CSS3</h2>
+                    <p class="texto-descricao">"Aprofundei meus conhecimentos em CSS3 para criar interfaces modernas e responsivas. Aprendi a utilizar Flexbox e Grid para layouts avançados, além de dominar animações e transições para melhorar a experiência do usuário. Garanto que os sites sejam funcionais em qualquer dispositivo."</p>
+                </div>
+            </section>
+
+            <section class="row align-items-center mb-5 section-item">
+                <div class="col-md-7">
+                    <h2 class="titulo-roxo">JavaScript</h2>
+                    <p class="texto-descricao">"Finalizei o curso de JavaScript focado em lógica de programação e interatividade. Durante o aprendizado, desenvolvi habilidades em manipulação do DOM, eventos, consumo de APIs e lógica assíncrona (AJAX/Promises). Crio sistemas web dinâmicos e fluidos."</p>
+                </div>
+                <div class="col-md-5 text-center">
+                    <img src="assets/img/perfil-candidato/Gemini_Generated_Image_u5p4h5u5p4h5u5p4.png" class="img-fluid certificado-img" alt="Certificado JavaScript">
+                </div>
+            </section>
+
+            <section class="row align-items-center mb-5 section-item">
+                <div class="col-md-5 text-center order-last order-md-first">
+                    <img src="assets/img/perfil-candidato/Gemini_Generated_Image_exmupeexmupeexmu.png" class="img-fluid certificado-img" alt="Certificado PHP">
+                </div>
+                <div class="col-md-7">
+                    <h2 class="titulo-roxo">PHP</h2>
+                    <p class="texto-descricao">"Certificado em PHP para desenvolvimento backend. Aprendi a construir a inteligência por trás dos sites, incluindo conexão com bancos de dados MySQL, gerenciamento de sessões, formulários seguros e arquitetura de sistemas. Aplico isso em projetos reais como o 'Pizza de Forno'."</p>
+                </div>
+            </section>
+
+            <section class="row align-items-center mb-5 section-item">
+                <div class="col-md-7">
+                    <h2 class="titulo-roxo">Adobe Photoshop</h2>
+                    <p class="texto-descricao">"Especializei-me em edição e manipulação de imagens. O foco foi em criação de layouts para web, tratamento de fotos profissionais e design de marcas. Entrego a identidade visual completa de um projeto com acabamento profissional."</p>
+                </div>
+                <div class="col-md-5 text-center">
+                    <img src="assets/img/perfil-candidato/Gemini_Generated_Image_tchmttchmttchmtt.png" class="img-fluid certificado-img" alt="Certificado Photoshop">
+                </div>
+            </section>
+
+        </div>
     </main>
    <!-- Include JS -->
    <?php
    require_once 'assets/templates/js.php';
    ?>
 </body>
-
 </html>
