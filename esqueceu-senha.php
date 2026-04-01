@@ -1,4 +1,16 @@
 <!-- KAUÃ -->
+<?php
+require_once "../backend/includes/funcoes.php";
+
+$mensagem = '';
+
+if (isset($_POST['recuperar'])) {
+    // captura o e-mail preenchido pelo usuario
+    $email = $_POST['email'];
+
+    $mensagem = recuperarSenha($email);
+}
+?>
 
 <!doctype html>
 <html lang="pt-br">
