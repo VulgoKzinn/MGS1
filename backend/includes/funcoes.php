@@ -7,7 +7,7 @@ function login($email, $senha)
     try {
         global $conexao;
 
-        $sql = "SELECT id,email,senha,ativo,s_temp FROM tb_login WHERE email=:email";
+        $sql = "SELECT id,email,senha,ativo,id_conta,s_temp FROM tb_login WHERE email=:email";
 
         $comando = $conexao->prepare($sql);
         $comando->bindValue(':email', $email);
@@ -34,12 +34,17 @@ function login($email, $senha)
                     $_SESSION['email'] = $dados['email'];
                     // guarda o s_temp (senha temporario) 
                     $_SESSION['s_temp'] = $dados['s_temp'];
+                    // guarda o s_temp (senha temporario) 
+                    $_SESSION['id_conta'] = $dados['id_conta'];
 
                     if ($dados['s_temp'] == 0) {
-                        // redirecionar para painel admin
-                        header('location: admin/dashboard.php');
+                        if ($dados['id_conta'] == 1) {
+                        header('location: pag_inicial.php');
                     } else {
-                        header('Location: usuario/nova-senha.php');
+                        header('Location: pag_inicial_empresa.php');
+                    }
+                    } else {
+                        header('Location: reset.php');
                     }
                 }
             } else {

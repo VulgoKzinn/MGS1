@@ -62,7 +62,8 @@ if (isset($_POST['login'])) {
                 </div>
             <?php endif; ?>
 
-            <button type="submit" class="btn btn-success mt-3">Logar</button>
+            <button type="submit" name="login" class="btn btn-success mt-3">Logar</button>
+
             <!-- Links extras -->
             <div class="extra-links"> <a href="cadastro-candidato.php">Cadastrar Conta</a> <a href="cadastro-empresa.php">Cadastrar Empresa</a> </div>
         </form>

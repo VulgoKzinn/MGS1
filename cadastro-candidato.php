@@ -68,6 +68,13 @@ if (isset($_POST['cadastrar'])) {
                 </label>
             </div>
 
+            <!-- Mensagem -->
+            <?php if(!empty($mensagem)): ?>
+                <div class="text-sm text-indigo-300 bg-indigo-900/20 border border-indigo-800 p-2 rounded">
+                    <?= $mensagem; ?>
+                </div>
+            <?php endif; ?>
+            
             <div class="text-end">
                 <button type="submit" class="btn btn-success w-100" name="cadastrar">
                     Criar Conta
