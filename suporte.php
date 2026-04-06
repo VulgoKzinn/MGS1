@@ -1,3 +1,10 @@
+<?php
+require_once "backend/includes/funcoes.php";
+suporte();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 

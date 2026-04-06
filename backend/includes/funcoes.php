@@ -190,3 +190,7 @@ function cadastrarUsuario($email, $senha)
         return "Erro ao cadastrar usuario!";
     }
 }
+function suporte()
+{
+    
+}
