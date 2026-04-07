@@ -11,17 +11,10 @@ $id_nivel = $_SESSION['id_nivel'];
 <head>
    <meta charset="UTF-8">
    <title>Perfil Empresarial</title>
-<<<<<<< HEAD
    <!-- Include Links -->
    <?php
    require_once 'assets/templates/head.php';
    ?>
-=======
-    <!-- Include Links -->
-    <?php
-    require_once 'assets/templates/head.php';
-    ?>
->>>>>>> 0f3bd1529055a2388c9507f7139f10c65a033514
    <!-- Para garantir responsividade em mobile bootstrap -->
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <!-- css da pagina -->
