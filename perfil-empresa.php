@@ -1,3 +1,9 @@
+<?php
+require_once "backend/includes/funcoes.php";
+validaAcesso();
+$id_nivel = $_SESSION['id_nivel'];
+
+?>
 <!-- SABRINA -->
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -5,20 +11,30 @@
 <head>
    <meta charset="UTF-8">
    <title>Perfil Empresarial</title>
-   <!-- css da pagina -->
-   <link rel="stylesheet" href="assets/css/perfil-empresa.css">
+<<<<<<< HEAD
    <!-- Include Links -->
    <?php
-   require_once 'assets/templates/head.php'; 
+   require_once 'assets/templates/head.php';
    ?>
+=======
+    <!-- Include Links -->
+    <?php
+    require_once 'assets/templates/head.php';
+    ?>
+>>>>>>> 0f3bd1529055a2388c9507f7139f10c65a033514
    <!-- Para garantir responsividade em mobile bootstrap -->
    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- css da pagina -->
+   <link rel="stylesheet" href="assets/css/perfil-empresa.css">
    <!--OBS talvez tirar depois de padronizar a fonte -->
    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
-<body id="bodypgs">
-    <?php require_once "assets/templates/headerMGS.php" ?>
+<body>
+<<<<<<< HEAD
+=======
+    <?php include "assets/templates/headerMGS.php"; ?>
+>>>>>>> 0f3bd1529055a2388c9507f7139f10c65a033514
    <main class="container mt-4">
       <!-- PERFIL -->
       <div class="position-relative">
@@ -130,7 +146,7 @@
                   <label class="form-label text-light">Salário</label>
                   <div class="form-control custom-box">A Combinar</div>
                </div>
-               
+
                <div class="col-md-6">
                   <label class="form-label text-light">Benefícios</label>
                   <div class="form-control custom-box">

@@ -7,7 +7,7 @@ function login($email, $senha)
     try {
         global $conexao;
 
-        $sql = "SELECT id,email,senha,ativo,s_temp FROM tb_login WHERE email=:email";
+        $sql = "SELECT id,email,senha,ativo,s_temp,id_nivel FROM tb_login WHERE email=:email";
 
         $comando = $conexao->prepare($sql);
         $comando->bindValue(':email', $email);
@@ -32,14 +32,16 @@ function login($email, $senha)
                     $_SESSION['sistema'] = 'sis_login';
                     // guarda o email 
                     $_SESSION['email'] = $dados['email'];
+                    // guarda o id_nivel (se é admin ou user) 
+                    $_SESSION['id_nivel'] = $dados['id_nivel'];
                     // guarda o s_temp (senha temporario) 
                     $_SESSION['s_temp'] = $dados['s_temp'];
 
                     if ($dados['s_temp'] == 0) {
                         // redirecionar para painel admin
-                        header('location: admin/dashboard.php');
+                        header('location: pag_inicial.php');
                     } else {
-                        header('Location: usuario/nova-senha.php');
+                        header('Location: reset.php');
                     }
                 }
             } else {
@@ -64,7 +66,14 @@ function validaAcesso()
     }
 
     if ($_SESSION['s_temp'] == 1) {
-        header('Location: ../usuario/nova-senha.php');
+        header('Location: ../reset.php');
+    }
+}
+
+function validaAdmin($id_nivel)
+{
+    if ($id_nivel != 2) {
+        header('Location: ../pag_inicial.php');
     }
 }
 
@@ -86,10 +95,12 @@ function recuperarSenha($email)
                 return "Conta bloqueada, entre em contato com o suporte";
             } else {
                 $senha_temp = uniqid();
+                $senha_hash = password_hash($senha_temp, PASSWORD_ARGON2ID);
+
                 $sql = "UPDATE tb_login SET senha = :senha_temp, s_temp = :s_temp WHERE id = :id";
 
                 $comando = $conexao->prepare($sql);
-                $comando->bindValue(':senha_temp', $senha_temp);
+                $comando->bindValue(':senha_temp', $senha_hash);
                 $comando->bindValue(':id', $dados['id']);
                 $comando->bindValue(':s_temp', 1);
 
@@ -115,8 +126,10 @@ function novaSenha($senha)
         $idUsuario = $_SESSION['id'];
         $sql = "UPDATE tb_login SET senha=:senha, s_temp=0 WHERE id=:id";
 
+        $senha_hash = password_hash($senha,PASSWORD_ARGON2ID);
+
         $comando = $conexao->prepare($sql);
-        $comando->bindValue(':senha', $senha);
+        $comando->bindValue(':senha', $senha_hash);
         $comando->bindValue(':id', $idUsuario);
         $comando->execute();
 
@@ -137,7 +150,7 @@ function logout()
 
     session_destroy();
 
-    header('Location: ../');
+    header('Location: login.php');
     exit;
 }
 
