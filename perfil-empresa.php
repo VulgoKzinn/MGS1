@@ -30,11 +30,8 @@ $id_nivel = $_SESSION['id_nivel'];
    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
-<body>
-<<<<<<< HEAD
-=======
-    <?php include "assets/templates/headerMGS.php"; ?>
->>>>>>> 0f3bd1529055a2388c9507f7139f10c65a033514
+<body id="bodypgs">
+    <?php require_once "assets/templates/headerMGS.php" ?>
    <main class="container mt-4">
       <!-- PERFIL -->
       <div class="position-relative">
