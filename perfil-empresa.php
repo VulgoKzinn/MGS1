@@ -102,7 +102,7 @@
 
                <!-- Título -->
                <div class="text-center mb-4">
-                  <h2 class="fw-bold text-dark">Analista de marketing digital</h2>
+                  <h2 class="fw-bold text-white">Analista de marketing digital</h2>
                </div>
 
                <div class="row g-3">
