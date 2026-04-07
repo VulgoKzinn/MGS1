@@ -1,4 +1,5 @@
 <?php
+require_once "backend/includes/funcoes.php";
 $acao = $_GET['acao'] ?? null;
 
 if ($acao === 'logout') {
