@@ -11,10 +11,10 @@ $id_nivel = $_SESSION['id_nivel'];
 <head>
    <meta charset="UTF-8">
    <title>Perfil Empresarial</title>
-   <!-- Include Links -->
-   <?php
-   require_once 'assets/templates/head.php';
-   ?>
+    <!-- Include Links -->
+    <?php
+    require_once 'assets/templates/head.php';
+    ?>
    <!-- Para garantir responsividade em mobile bootstrap -->
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <!-- css da pagina -->
@@ -24,6 +24,7 @@ $id_nivel = $_SESSION['id_nivel'];
 </head>
 
 <body>
+    <?php include "assets/templates/headerMGS.php"; ?>
    <main class="container mt-4">
       <!-- PERFIL -->
       <div class="position-relative">
