@@ -1,6 +1,12 @@
 <?php
 require_once "backend/includes/funcoes.php";
-suporte();
+
+if(isset($_POST['enviar'])){
+    $nome = $_POST['nome'];
+    $descricao = $_POST['descricao'];
+    $email = $_POST['email'];
+$mensagem=suporte($nome, $email, $descricao);
+}
 ?>
 
 
@@ -47,20 +53,28 @@ suporte();
                     <form method="POST" action="">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <input type="text" class="form-control" placeholder="Seu nome" required>
+                                <input type="text" id="nome" name="nome" class="form-control" placeholder="Seu nome" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <input type="email" class="form-control" placeholder="Seu email" required>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Seu email" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <textarea class="form-control" rows="4" placeholder="Descreva seu problema..." required></textarea>
+                            <textarea class="form-control" id="descricao" name="descricao" rows="4" placeholder="Descreva seu problema..." required></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">
+                        <button type="submit" id="enviar" name="enviar" class="btn btn-primary w-100">
                             Enviar
                         </button>
+                        <?php if(!empty($mensagem)): ?>
+                <div class="text-sm text-indigo-300 bg-indigo-900/20 border border-indigo-800 p-2 rounded">
+                    <?= $mensagem;?>
+                     <?php if (str_contains($mensagem, 'sucesso')): ?>
+        <a href="pag_inicial.php" class="btn btn-success w-100">Voltar</a>
+                    <?php endif; ?>
+                </div>
+                  <?php endif; ?>
                     </form>
                 </div>
 

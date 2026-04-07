@@ -190,7 +190,24 @@ function cadastrarUsuario($email, $senha)
         return "Erro ao cadastrar usuario!";
     }
 }
-function suporte()
+function suporte($nome, $email, $descricao)
 {
-    
+    global $conexao;
+
+    try {
+        $sql = "INSERT INTO tb_suporte 
+            (nome,email,descricao) 
+            VALUES (:nome,:email,:descricao)";
+
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':nome', $nome);
+        $comando->bindValue(':email', $email);
+        $comando->bindValue(':descricao', $descricao);
+        $comando->execute();
+
+        return "Mensagem enviada com sucesso, em breve entraremos em contato";
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao enviar mensagem";
+    }
 }
