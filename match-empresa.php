@@ -1,3 +1,9 @@
+<?php
+require_once "backend/includes/funcoes.php";
+validaAcesso();
+$id_nivel = $_SESSION['id_nivel'];
+validaUsuario($id_nivel);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,5 +149,12 @@
         </div>
     </div>
 </section>
+
+
+    <!-- Include JS -->
+    <?php
+    require_once 'assets/templates/js.php';
+    ?>
+
 </body>
 </html>

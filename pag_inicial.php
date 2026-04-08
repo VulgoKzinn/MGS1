@@ -83,8 +83,6 @@ validaEmpresa($id_nivel);
 
     </div>
 
-    <footer></footer>
-
     <script>
         function toggleTexto() {
             let conteudo = document.getElementById("conteudoExtra");
@@ -102,10 +100,6 @@ validaEmpresa($id_nivel);
     <?php
     require_once 'assets/templates/js.php';
     ?>
-
-
-
-
 </body>
 
 </html>
