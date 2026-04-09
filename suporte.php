@@ -38,12 +38,12 @@ $mensagem=suporte($nome, $email, $descricao);
             <div class="col-md-8 col-lg-6">
 
                 <!-- FAQ -->
-                <div class="card card-faq p-4 shadow-sm text-center mb-4 perguntas">
+                <!-- <div class="card card-faq p-4 shadow-sm text-center mb-4 perguntas">
                     <i class="fa-solid fa-circle-question icon mb-3"></i>
                     <h5>Perguntas Frequentes</h5>
                     <p>Encontre respostas rápidas para dúvidas comuns.</p>
                     <a href="#" class="btn btn-outline-primary">Ver mais</a>
-                </div>
+                </div> -->
 
 
                 <!-- FORMULÁRIO -->

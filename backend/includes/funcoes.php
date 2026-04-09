@@ -211,3 +211,58 @@ function suporte($nome, $email, $descricao)
         return "Erro ao enviar mensagem";
     }
 }
+// ===========================================Ativar e inaivar=======================================================
+ function ativoEinativo($id){
+    try{
+        global $conexao;
+        $sql = "UPDATE tb_suporte
+        SET ativo = NOT ativo
+        WHERE id = :id";
+        $comando =$conexao->prepare($sql);
+        $comando->bindValue(':id' ,$id);
+        $comando->execute();
+        header("Location:lista_suporte.php");
+
+    }catch(PDOException $err){
+        error_log($err->getMessage());
+    }
+ }
+// ===========================================Ativar e inaivar=======================================================
+function deletarChamado($id){
+    try {
+
+        global $conexao;
+        $sql = "DELETE FROM tb_suporte WHERE id = :id";
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':id',$id);
+        $comando->execute();
+
+        header("Location: lista_suporte.php");
+
+    } catch (PDOException $err) {
+
+        echo $err->getMessage(); // mostre o erro real
+        error_log($err->getMessage());
+
+    }
+}
+// ============================================Lista Chamado============================================
+function listachamado()
+{
+    try {
+        global $conexao;
+
+        $sql = "SELECT * FROM tb_suporte";
+
+        $comando = $conexao->prepare($sql);
+        $comando->execute();
+
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        echo $err->getMessage();
+
+        return "Erro ao listar";
+    }
+}
+// ============================================Lista Chamado============================================
