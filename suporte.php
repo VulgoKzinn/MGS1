@@ -1,5 +1,7 @@
 <?php
 require_once "backend/includes/funcoes.php";
+validaAcesso();
+$id_nivel = $_SESSION['id_nivel'];
 
 if(isset($_POST['enviar'])){
     $nome = $_POST['nome'];
@@ -7,10 +9,8 @@ if(isset($_POST['enviar'])){
     $email = $_POST['email'];
 $mensagem=suporte($nome, $email, $descricao);
 }
+
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
