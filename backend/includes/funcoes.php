@@ -292,3 +292,38 @@ function listachamado()
     }
 }
 // ============================================Lista Chamado============================================
+
+// ===========================================Cadastrar Vaga=======================================================
+function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$localizacao,$salario,$beneficio,$carga_horaria,$descricao,$requisitos)
+{
+    try {
+        global $conexao;
+
+        $sql = "INSERT INTO tb_vagas(vaga,area_atuacao,modalidade,modelo_de_trabalho,localizacao,salario,beneficio,carga_horaria,descricao,requisitos)VALUES(:vaga,:area_atuacao,:modalidade.:modelo_de_trabalho,:localiaocao,:salario,:beneficio,:carga_horaria,:descricao,:requisitos)";
+
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':vaga',$vaga);
+        $comando->bindValue(':area_atuacao',$area_atuacao);
+        $comando->bindValue(':modalidade',$modalidade);
+        $comando->bindValue(':modelo_de_trabalho',$modelo_de_trabalho);
+        $comando->bindValue(':localizacao',$localizacao);
+        $comando->bindValue(':salario',$salario);
+        $comando->bindValue(':beneficio',$beneficio);
+        $comando->bindValue(':carga_horaria',$carga_horaria);
+        $comando->bindValue(':descricao',$descricao);
+        $comando->bindValue(':requisitos',$requisitos);
+
+        $comando->execute();
+
+        //retorna o id do insert do produto acima
+       return $conexao->lastInsertId();
+
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        //echo $err->getMessage();
+        return "Erro ao cadastrar";
+        
+    }
+    
+    $conexao = null;
+}
