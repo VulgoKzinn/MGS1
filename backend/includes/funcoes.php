@@ -292,3 +292,23 @@ function listachamado()
     }
 }
 // ============================================Lista Chamado============================================
+// ============================================Lista Atuacao============================================
+function listaAtuacao()
+{
+    try {
+        global $conexao;
+
+        $sql = "SELECT * FROM tb_ramoatuacao";
+
+        $comando = $conexao->prepare($sql);
+        $comando->execute();
+
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        echo $err->getMessage();
+
+        return "Erro ao listar";
+    }
+}
+// ============================================Lista Atuacao============================================

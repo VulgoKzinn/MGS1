@@ -8,15 +8,23 @@ if (isset($_POST['cadastrar'])) {
     // captura a senha preenchido pelo usuario
     $senha =  filter_input(INPUT_POST, 'senha');
     $confirma =  filter_input(INPUT_POST, 'confirma');
-    $empresa = filter_input(INPUT_POST, 'empresa');
+    $empresa = isset($_POST['empresa']) ? 1 : 0;
 
     if ($senha == '' && $confirma == '') {
-        $mensagem = 'Preencha a senha!';
-    } elseif ($senha !== $confirma) {
-        $mensagem = 'Senhas não conferem!';
-    } else {
-        $mensagem = validaEmail($email, $senha, $empresa);
+    $mensagem = 'Preencha a senha!';
+} elseif ($senha !== $confirma) {
+    $mensagem = 'Senhas não conferem!';
+} else {
+
+    // SE FOR EMPRESA → REDIRECIONA
+    if ($empresa == 1) {
+        header("Location: cadastro-empresa.php?email=" . urlencode($email) . "&senha=" . urlencode($senha));
+        exit;
     }
+
+    // SE NÃO FOR EMPRESA → SEGUE NORMAL
+    $mensagem = validaEmail($email, $senha, $empresa);
+}
 }
 
 ?>

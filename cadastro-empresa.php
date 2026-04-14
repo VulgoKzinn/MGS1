@@ -1,4 +1,10 @@
 <!-- KAUÃ -->
+<?php
+require_once "backend/includes/funcoes.php";
+// ============================================Lista Atuacao============================================
+$listaAtuacaos = listaAtuacao();
+// ============================================Lista Atuacao============================================
+?>
 <!doctype html>
 <html lang="pt-br">
 
@@ -6,10 +12,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastro | Matchwork</title>
-   <!-- Include Links -->
-   <?php
-   require_once 'assets/templates/head.php';
-   ?>
+    <!-- Include Links -->
+    <?php
+    require_once 'assets/templates/head.php';
+    ?>
 </head>
 
 <body id="cadastroCand">
@@ -20,6 +26,8 @@
     <main id="CadCand">
         <form action="" method="post" class="p-4">
             <h2 class="text-center mb-4">Crie sua Conta Empresa</h2>
+
+
 
             <!-- Primeira linha -->
             <div class="row mb-3">
@@ -51,7 +59,7 @@
                     <label for="cepEmp" class="form-label">Número</label>
                     <input type="number" class="form-control" id="numeroEmp" placeholder="Nº 30">
                 </div>
-                </div>
+            </div>
             </div>
 
             <!-- Terceira linha -->
@@ -61,9 +69,14 @@
                     <input type="text" class="form-control" id="complementoEmp" placeholder="Casa">
                 </div>
                 <div class="col-md-4">
-                    <label for="area" class="form-label">Ramo de Atuação</label>
-                    <select class="form-select" name="" id="">
-                        <option value="" disabled selected>Selecione...</option>
+                    <label class="form-label">Ramo de Atuação</label>
+                    <select class="form-control" name="ramo">
+                         <option selected>Escolha...</option>
+                        <?php foreach ($listaAtuacaos as $listaAtuacao): ?>
+                            <option value="<?= $listaAtuacao['id']; ?>">
+                                <?= $listaAtuacao['ramo']; ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-4 d-flex align-items-center">
@@ -79,23 +92,23 @@
             <!-- Botão -->
             <div class="text-end">
                 <button type="submit"
-                                class="btn btn-success">Próximo</button>
+                    class="btn btn-success">Próximo</button>
             </div>
         </form>
     </main>
 
 
 
-   <!-- Include JS -->
-   <?php
-   require_once 'assets/templates/js.php';
-   ?>
+    <!-- Include JS -->
+    <?php
+    require_once 'assets/templates/js.php';
+    ?>
     <script>
-        $(document).ready(function () {
-            $('#cnpj').mask('00.000.000/0000-00');   // CNPJ
+        $(document).ready(function() {
+            $('#cnpj').mask('00.000.000/0000-00'); // CNPJ
             $('#telefoneEmp').mask('(00) 00000-0000'); // Telefone
-            $('#cepEmp').mask('00000-000');          // CEP
-            $('#numeroEmp').mask('0000');          // NÚMERO
+            $('#cepEmp').mask('00000-000'); // CEP
+            $('#numeroEmp').mask('0000'); // NÚMERO
         });
 
         $('.selectpicker').selectpicker('refresh');
