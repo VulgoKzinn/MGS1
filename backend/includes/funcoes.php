@@ -299,7 +299,7 @@ function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$loca
     try {
         global $conexao;
 
-        $sql = "INSERT INTO tb_vagas(vaga,area_atuacao,modalidade,modelo_de_trabalho,localizacao,salario,beneficio,carga_horaria,descricao,requisitos)VALUES(:vaga,:area_atuacao,:modalidade.:modelo_de_trabalho,:localiaocao,:salario,:beneficio,:carga_horaria,:descricao,:requisitos)";
+        $sql = "INSERT INTO tb_vagas(vaga,area_atuacao,modalidade,modelo_de_trabalho,localizacao,salario,beneficio,carga_horaria,descricao,requisitos)VALUES(:vaga,:area_atuacao,:modalidade,:modelo_de_trabalho,:localizacao,:salario,:beneficio,:carga_horaria,:descricao,:requisitos)";
 
         $comando = $conexao->prepare($sql);
         $comando->bindValue(':vaga',$vaga);
@@ -326,4 +326,43 @@ function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$loca
     }
     
     $conexao = null;
+}
+
+// ===========================================Cadastrar Imagem=======================================================
+function uploadImagem($imagem){
+
+    //define a pasta para upload 
+    $pasta = "assets/img/uploads/";
+
+    //captura a extensão da imagem
+    $extensao = strtolower(pathinfo($imagem['name'], PATHINFO_EXTENSION));
+
+    //gera um nome aleatorio para imagem e junta com a extensão
+    $nomeUpload =md5(uniqid()) . '.' . $extensao;
+
+    //faz o upload da imagem 
+    move_uploaded_file($imagem['tmp_name'],$pasta . $nomeUpload);
+
+    //retorna o nome da imagem(hash)
+    return $nomeUpload;
+}
+
+// ===========================================Cadastrar Imagem Vaga=======================================================
+function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
+    try {
+        global $conexao;
+        $sql = "INSERT INTO tb_img_vaga(imagem,id_empresa)VALUES(:nomeImagemUpload,:idVaga)";
+
+        $comando = $conexao->prepare($sql);
+
+        $comando->bindValue(':nomeImagemUpload', $nomeImagemUpload);
+        $comando->bindValue(':idVaga',$idVaga);
+        $comando->execute();
+
+        header('Location: perfil_empresa.php');
+
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao cadastrar";
+    }
 }

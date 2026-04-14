@@ -2,6 +2,7 @@
 <?php
 require_once "backend/includes/funcoes.php";
 
+
 //caso seja clicado no botão cadastrar a função é executada
 if(isset($_POST['cadastrar'])){
     $vaga =filter_input(INPUT_POST,'vaga');
@@ -23,10 +24,6 @@ if(isset($_POST['cadastrar'])){
     cadastrarImagemVaga($idVaga,$nomeImagemUpload);
 }
 
-
-
-
-
 ?>
 
 <!doctype html>
@@ -36,6 +33,7 @@ if(isset($_POST['cadastrar'])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastro Vaga| Matchwork</title>
+
     <!-- Include Links -->
     <?php
     require_once 'assets/templates/head.php';
@@ -127,7 +125,7 @@ if(isset($_POST['cadastrar'])){
 
             <!-- Botão -->
             <div class="text-end">
-                <button type="submit"
+                <button name="cadastrar" value="cadastrar" type="submit"
                     class="btn btn-success">Cadastrar</button>
             </div>
         </form>
