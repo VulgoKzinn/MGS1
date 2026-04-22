@@ -366,3 +366,40 @@ function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
         return "Erro ao cadastrar";
     }
 }
+
+// ===========================================Lista as Vagas=======================================================
+function listaVaga(){
+
+try {
+    global $conexao;
+    $sql = "SELECT * FROM tb_vagas";
+
+    $comando = $conexao->prepare($sql);
+    $comando->execute();
+    return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $err) {
+    error_log($err->getMessage());
+    return "Erro ao conectar no banco de dados";
+}
+// ANULA A CONEXAO COM O BANCO
+$conexao = null;
+}
+
+// ===========================================Traz informações da Vaga=======================================================
+function listaVagaId($idVaga){
+
+try {
+    global $conexao;
+    $sql = "SELECT * FROM tb_vagas WHERE id = :idVaga";
+
+    $comando = $conexao->prepare($sql);
+    $comando->bindValue(':idVaga', $idVaga);
+    $comando->execute();
+    return $comando->fetch(PDO::FETCH_ASSOC);
+
+} catch (PDOException $err) {
+    error_log($err->getMessage());
+    return "Erro ao conectar no banco de dados";
+}
+}
