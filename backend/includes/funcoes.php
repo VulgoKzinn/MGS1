@@ -166,19 +166,19 @@ function validaEmail($email, $senha, $empresa)
     try {
         global $conexao;
 
-        $sql = "SELECT email,ativo FROM tb_login WHERE email=:email";
-
+        $sql = "SELECT email FROM tb_login WHERE email = :email";
         $comando = $conexao->prepare($sql);
         $comando->bindValue(':email', $email);
-
         $comando->execute();
+
         $dados = $comando->fetch(PDO::FETCH_ASSOC);
 
         if ($dados != null) {
             return "E-mail já existe!";
         } else {
-            criarConta($email, $senha,$empresa);
+            return criarConta($email, $senha, $empresa); 
         }
+
     } catch (PDOException $err) {
         error_log($err->getMessage());
         return "Erro ao validar os dados!";
@@ -197,9 +197,9 @@ function criarConta($email, $senha, $empresa)
         // var_dump($empresa);
         // exit;
 
-        if($empresa == null){
+        if ($empresa == null) {
             $empresa = 2;
-        }else{
+        } else {
             $empresa = 1;
         }
         // var_dump ($empresa);
@@ -209,6 +209,7 @@ function criarConta($email, $senha, $empresa)
         $comando->bindValue(':senha', $senhaHash);
         $comando->bindValue(':id_nivel', $empresa);
         $comando->execute();
+        return $conexao->lastInsertId(); 
 
         return "E-mail cadastrado com sucesso!";
     } catch (PDOException $err) {
@@ -238,38 +239,37 @@ function suporte($nome, $email, $descricao)
     }
 }
 // ===========================================Ativar e inaivar=======================================================
- function ativoEinativo($id){
-    try{
+function ativoEinativo($id)
+{
+    try {
         global $conexao;
         $sql = "UPDATE tb_suporte
         SET ativo = NOT ativo
         WHERE id = :id";
-        $comando =$conexao->prepare($sql);
-        $comando->bindValue(':id' ,$id);
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':id', $id);
         $comando->execute();
         header("Location:lista_suporte.php");
-
-    }catch(PDOException $err){
+    } catch (PDOException $err) {
         error_log($err->getMessage());
     }
- }
+}
 // ===========================================Ativar e inaivar=======================================================
-function deletarChamado($id){
+function deletarChamado($id)
+{
     try {
 
         global $conexao;
         $sql = "DELETE FROM tb_suporte WHERE id = :id";
         $comando = $conexao->prepare($sql);
-        $comando->bindValue(':id',$id);
+        $comando->bindValue(':id', $id);
         $comando->execute();
 
         header("Location: lista_suporte.php");
-
     } catch (PDOException $err) {
 
         echo $err->getMessage(); // mostre o erro real
         error_log($err->getMessage());
-
     }
 }
 // ============================================Lista Chamado============================================
@@ -312,3 +312,48 @@ function listaAtuacao()
     }
 }
 // ============================================Lista Atuacao============================================
+    // =============================================Cadastro de Empresa======================================
+    function cadastrarEmpresa($dados, $id_login)
+    
+    {
+        global $conexao;
+        $sql = "SELECT id FROM tb_empresa WHERE id_login = :id_login";
+        $checkLogin = $conexao->prepare($sql);
+        $checkLogin->bindValue(':id_login', $id_login);
+        $checkLogin->execute();
+
+        if ($checkLogin->fetch()) {
+            return "Este login já possui uma empresa cadastrada!";
+        }
+
+        $sql = "SELECT id FROM tb_empresa WHERE cnpj = :cnpj";
+        $checkCnpj = $conexao->prepare($sql);
+        $checkCnpj->bindValue(':cnpj', $dados['cnpj']);
+        $checkCnpj->execute();
+
+        if ($checkCnpj->fetch()) {
+            return "CNPJ já cadastrado!";
+        }
+        
+        $sql = "INSERT INTO tb_empresa 
+        (id_login, rzsocial, telefone, complemento, cnpj, cep, atuacao, numero_endereco) VALUES (:id_login, :razao, :telefone, :complemento, :cnpj, :cep, :ramo, :numero)";
+
+        $comando = $conexao->prepare($sql);
+
+        $comando->bindValue(':id_login', $id_login);
+        $comando->bindValue(':razao', $dados['razao']);
+        $comando->bindValue(':telefone', $dados['telefoneEmp']);
+        $comando->bindValue(':complemento', $dados['complementoEmp']);
+        $comando->bindValue(':cnpj', $dados['cnpj']);
+        $comando->bindValue(':cep', $dados['cepEmp']);
+        $comando->bindValue(':ramo', $dados['ramo']);
+        $comando->bindValue(':numero', $dados['numeroEmp']);
+
+           if ($comando->execute()) {
+    return "sucesso";
+} else {
+    return "Erro ao cadastrar empresa!";
+}
+    }
+
+    // =============================================Cadastro de Empresa======================================

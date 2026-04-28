@@ -1,5 +1,6 @@
 <!-- KAUÃ -->
 <?php
+session_start(); // inicia a sessão
 require_once "backend/includes/funcoes.php";
 
 $mensagem = '';
@@ -10,21 +11,29 @@ if (isset($_POST['cadastrar'])) {
     $confirma =  filter_input(INPUT_POST, 'confirma');
     $empresa = isset($_POST['empresa']) ? 1 : 0;
 
-    if ($senha == '' && $confirma == '') {
-    $mensagem = 'Preencha a senha!';
-} elseif ($senha !== $confirma) {
-    $mensagem = 'Senhas não conferem!';
-} else {
+    if ($senha == '' || $confirma == ''){
+        $mensagem = 'Preencha a senha!';
+    } elseif ($senha !== $confirma) {
+        $mensagem = 'Senhas não conferem!';
+    } else {
+        $retorno = validaEmail($email, $senha, $empresa);
 
-    // SE FOR EMPRESA → REDIRECIONA
+if (is_numeric($retorno)) {
+
+    $id_login = $retorno;
+
     if ($empresa == 1) {
-        header("Location: cadastro-empresa.php?email=" . urlencode($email) . "&senha=" . urlencode($senha));
+
+        $_SESSION['id_login'] = $id_login; //  GUARDA O ID CERTO
+
+        header("Location: cadastro-empresa.php");
         exit;
     }
 
-    // SE NÃO FOR EMPRESA → SEGUE NORMAL
-    $mensagem = validaEmail($email, $senha, $empresa);
+} else {
+    $mensagem = $retorno;
 }
+    }
 }
 
 ?>
@@ -57,16 +66,15 @@ if (isset($_POST['cadastrar'])) {
                 <input type="email" class="form-control" name="email" placeholder="email@exemplo.com" required>
             </div>
 
-            Senha
             <div class="mb-3">
                 <label class="form-label">Senha</label>
-                <input type="password" class="form-control" name="senha" placeholder="••••••••" required>
+                <input type="password" class="form-control" name="senha" placeholder="Digite sua senha" required>
             </div>
 
             <!-- Confirmar senha -->
             <div class="mb-3">
                 <label class="form-label">Confirmar senha</label>
-                <input type="password" class="form-control" name="confirma" placeholder="••••••••" required>
+                <input type="password" class="form-control" name="confirma" placeholder="Confirme sua senha" required>
             </div>
 
             <!-- Termos -->
