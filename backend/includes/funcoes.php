@@ -318,6 +318,8 @@ function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$loca
         //retorna o id do insert do produto acima
        return $conexao->lastInsertId();
 
+       header('Location: cadastro-vaga.php');
+
     } catch (PDOException $err) {
         error_log($err->getMessage());
         //echo $err->getMessage();
@@ -328,7 +330,7 @@ function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$loca
     $conexao = null;
 }
 
-// ===========================================Cadastrar Imagem=======================================================
+// ===========================================Função upload imagem=======================================================
 function uploadImagem($imagem){
 
     //define a pasta para upload 
@@ -351,7 +353,7 @@ function uploadImagem($imagem){
 function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
     try {
         global $conexao;
-        $sql = "INSERT INTO tb_img_vaga(imagem,id_empresa)VALUES(:nomeImagemUpload,:idVaga)";
+        $sql = "INSERT INTO tb_img_vaga(imagem,id_vaga)VALUES(:nomeImagemUpload,:idVaga)";
 
         $comando = $conexao->prepare($sql);
 
@@ -359,7 +361,7 @@ function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
         $comando->bindValue(':idVaga',$idVaga);
         $comando->execute();
 
-        header('Location: perfil_empresa.php');
+        header('Location: perfil-empresa.php');
 
     } catch (PDOException $err) {
         error_log($err->getMessage());
@@ -402,4 +404,13 @@ try {
     error_log($err->getMessage());
     return "Erro ao conectar no banco de dados";
 }
+}
+
+// ===========================================Traz informações da Vaga=======================================================
+function deletarVaga($id){
+    try {
+        
+    } catch (\Throwable $th) {
+        
+    }
 }

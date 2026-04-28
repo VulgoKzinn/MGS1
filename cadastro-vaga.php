@@ -115,8 +115,8 @@ if(isset($_POST['cadastrar'])){
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label for="img_vaga" class="form-label">Foto da Vaga</label>
-                    <input value="cadastrar" type="file" class="form-control"  name="img_vaga" id="img_vaga">
+                    <label for="imagem" class="form-label">Foto da Vaga</label>
+                    <input value="cadastrar" type="file" class="form-control"  name="imagem" id="imagem">
                 </div>
                 
             </div>
