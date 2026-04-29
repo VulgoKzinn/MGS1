@@ -166,18 +166,17 @@ function validaEmail($email, $senha, $empresa)
     try {
         global $conexao;
 
-        $sql = "SELECT email,ativo FROM tb_login WHERE email=:email";
-
+        $sql = "SELECT email FROM tb_login WHERE email = :email";
         $comando = $conexao->prepare($sql);
         $comando->bindValue(':email', $email);
-
         $comando->execute();
+
         $dados = $comando->fetch(PDO::FETCH_ASSOC);
 
         if ($dados != null) {
             return "E-mail já existe!";
         } else {
-            criarConta($email, $senha,$empresa);
+            return criarConta($email, $senha, $empresa);
         }
     } catch (PDOException $err) {
         error_log($err->getMessage());
@@ -197,9 +196,9 @@ function criarConta($email, $senha, $empresa)
         // var_dump($empresa);
         // exit;
 
-        if($empresa == null){
+        if ($empresa == null) {
             $empresa = 2;
-        }else{
+        } else {
             $empresa = 1;
         }
         // var_dump ($empresa);
@@ -209,6 +208,7 @@ function criarConta($email, $senha, $empresa)
         $comando->bindValue(':senha', $senhaHash);
         $comando->bindValue(':id_nivel', $empresa);
         $comando->execute();
+        return $conexao->lastInsertId();
 
         return "E-mail cadastrado com sucesso!";
     } catch (PDOException $err) {
@@ -238,38 +238,37 @@ function suporte($nome, $email, $descricao)
     }
 }
 // ===========================================Ativar e inaivar=======================================================
- function ativoEinativo($id){
-    try{
+function ativoEinativo($id)
+{
+    try {
         global $conexao;
         $sql = "UPDATE tb_suporte
         SET ativo = NOT ativo
         WHERE id = :id";
-        $comando =$conexao->prepare($sql);
-        $comando->bindValue(':id' ,$id);
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':id', $id);
         $comando->execute();
         header("Location:lista_suporte.php");
-
-    }catch(PDOException $err){
+    } catch (PDOException $err) {
         error_log($err->getMessage());
     }
- }
+}
 // ===========================================Ativar e inaivar=======================================================
-function deletarChamado($id){
+function deletarChamado($id)
+{
     try {
 
         global $conexao;
         $sql = "DELETE FROM tb_suporte WHERE id = :id";
         $comando = $conexao->prepare($sql);
-        $comando->bindValue(':id',$id);
+        $comando->bindValue(':id', $id);
         $comando->execute();
 
         header("Location: lista_suporte.php");
-
     } catch (PDOException $err) {
 
         echo $err->getMessage(); // mostre o erro real
         error_log($err->getMessage());
-
     }
 }
 // ============================================Lista Chamado============================================
@@ -294,7 +293,8 @@ function listachamado()
 // ============================================Lista Chamado============================================
 
 // ===========================================Cadastrar Vaga=======================================================
-function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$localizacao,$salario,$beneficio,$carga_horaria,$descricao,$requisitos)
+function cadastrarVaga($vaga, $area_atuacao, $modalidade, $modelo_de_trabalho, $localizacao, $salario, $beneficio, $carga_horaria, $descricao, $requisitos)
+
 {
     try {
         global $conexao;
@@ -302,36 +302,35 @@ function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$loca
         $sql = "INSERT INTO tb_vagas(vaga,area_atuacao,modalidade,modelo_de_trabalho,localizacao,salario,beneficio,carga_horaria,descricao,requisitos)VALUES(:vaga,:area_atuacao,:modalidade,:modelo_de_trabalho,:localizacao,:salario,:beneficio,:carga_horaria,:descricao,:requisitos)";
 
         $comando = $conexao->prepare($sql);
-        $comando->bindValue(':vaga',$vaga);
-        $comando->bindValue(':area_atuacao',$area_atuacao);
-        $comando->bindValue(':modalidade',$modalidade);
-        $comando->bindValue(':modelo_de_trabalho',$modelo_de_trabalho);
-        $comando->bindValue(':localizacao',$localizacao);
-        $comando->bindValue(':salario',$salario);
-        $comando->bindValue(':beneficio',$beneficio);
-        $comando->bindValue(':carga_horaria',$carga_horaria);
-        $comando->bindValue(':descricao',$descricao);
-        $comando->bindValue(':requisitos',$requisitos);
+        $comando->bindValue(':vaga', $vaga);
+        $comando->bindValue(':area_atuacao', $area_atuacao);
+        $comando->bindValue(':modalidade', $modalidade);
+        $comando->bindValue(':modelo_de_trabalho', $modelo_de_trabalho);
+        $comando->bindValue(':localizacao', $localizacao);
+        $comando->bindValue(':salario', $salario);
+        $comando->bindValue(':beneficio', $beneficio);
+        $comando->bindValue(':carga_horaria', $carga_horaria);
+        $comando->bindValue(':descricao', $descricao);
+        $comando->bindValue(':requisitos', $requisitos);
 
         $comando->execute();
 
         //retorna o id do insert do produto acima
-       return $conexao->lastInsertId();
+        return $conexao->lastInsertId();
 
-       header('Location: cadastro-vaga.php');
-
+        header('Location: cadastro-vaga.php');
     } catch (PDOException $err) {
         error_log($err->getMessage());
         //echo $err->getMessage();
         return "Erro ao cadastrar";
-        
     }
-    
+
     $conexao = null;
 }
 
 // ===========================================Função upload imagem=======================================================
-function uploadImagem($imagem){
+function uploadImagem($imagem)
+{
 
     //define a pasta para upload
     $pasta = "assets/img/uploads/";
@@ -345,14 +344,15 @@ function uploadImagem($imagem){
     $nomeUpload = md5(uniqid()) . '.' . $extensao;
 
     //faz o upload da imagem
-    move_uploaded_file($imagem['tmp_name'],$pasta . $nomeUpload);
+    move_uploaded_file($imagem['tmp_name'], $pasta . $nomeUpload);
 
     //retorna o nome da imagem(hash)
     return $nomeUpload;
 }
 
 // ===========================================Cadastrar Imagem Vaga=======================================================
-function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
+function cadastrarImagemVaga($idVaga, $nomeImagemUpload)
+{
     try {
         global $conexao;
         $sql = "INSERT INTO tb_img_vaga(imagem,id_vaga)VALUES(:nomeImagemUpload,:idVaga)";
@@ -360,11 +360,10 @@ function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
         $comando = $conexao->prepare($sql);
 
         $comando->bindValue(':nomeImagemUpload', $nomeImagemUpload);
-        $comando->bindValue(':idVaga',$idVaga);
+        $comando->bindValue(':idVaga', $idVaga);
         $comando->execute();
 
         header('Location: perfil-empresa.php');
-
     } catch (PDOException $err) {
         error_log($err->getMessage());
         return "Erro ao cadastrar";
@@ -372,47 +371,110 @@ function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
 }
 
 // ===========================================Lista as Vagas=======================================================
-function listaVaga(){
+function listaVaga()
+{
 
-try {
-    global $conexao;
-    $sql = "SELECT * FROM tb_vagas";
-
-    $comando = $conexao->prepare($sql);
-    $comando->execute();
-    return $comando->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $err) {
-    error_log($err->getMessage());
-    return "Erro ao conectar no banco de dados";
-}
-// ANULA A CONEXAO COM O BANCO
-$conexao = null;
-}
-
-// ===========================================Traz informações da Vaga=======================================================
-function listaVagaId($idVaga){
-
-try {
-    global $conexao;
-    $sql = "SELECT * FROM tb_vagas WHERE id = :idVaga";
-
-    $comando = $conexao->prepare($sql);
-    $comando->bindValue(':idVaga', $idVaga);
-    $comando->execute();
-    return $comando->fetch(PDO::FETCH_ASSOC);
-
-} catch (PDOException $err) {
-    error_log($err->getMessage());
-    return "Erro ao conectar no banco de dados";
-}
-}
-
-// ===========================================Traz informações da Vaga=======================================================
-function deletarVaga($id){
     try {
-        
-    } catch (\Throwable $th) {
-        
+        global $conexao;
+        $sql = "SELECT * FROM tb_vagas";
+
+        $comando = $conexao->prepare($sql);
+        $comando->execute();
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao conectar no banco de dados";
+    }
+    // ANULA A CONEXAO COM O BANCO
+    $conexao = null;
+}
+
+// ===========================================Traz informações da Vaga=======================================================
+function listaVagaId($idVaga)
+{
+
+    try {
+        global $conexao;
+        $sql = "SELECT * FROM tb_vagas WHERE id = :idVaga";
+
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':idVaga', $idVaga);
+        $comando->execute();
+        return $comando->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao conectar no banco de dados";
     }
 }
+
+// ===========================================Traz informações da Vaga=======================================================
+function deletarVaga($id)
+{
+    try {
+    } catch (\Throwable $th) {
+    }
+}
+
+function listaAtuacao()
+{
+    try {
+        global $conexao;
+        $sql = "SELECT * FROM tb_ramoatuacao";
+
+        $comando = $conexao->prepare($sql);
+        $comando->execute();
+
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        echo $err->getMessage();
+
+        return "Erro ao listar";
+    }
+}
+// ============================================Lista Atuacao============================================
+// =============================================Cadastro de Empresa======================================
+function cadastrarEmpresa($dados, $id_login)
+
+{
+    global $conexao;
+    $sql = "SELECT id FROM tb_empresa WHERE id_login = :id_login";
+    $checkLogin = $conexao->prepare($sql);
+    $checkLogin->bindValue(':id_login', $id_login);
+    $checkLogin->execute();
+
+    if ($checkLogin->fetch()) {
+        return "Este login já possui uma empresa cadastrada!";
+    }
+
+    $sql = "SELECT id FROM tb_empresa WHERE cnpj = :cnpj";
+    $checkCnpj = $conexao->prepare($sql);
+    $checkCnpj->bindValue(':cnpj', $dados['cnpj']);
+    $checkCnpj->execute();
+
+    if ($checkCnpj->fetch()) {
+        return "CNPJ já cadastrado!";
+    }
+
+    $sql = "INSERT INTO tb_empresa 
+        (id_login, rzsocial, telefone, complemento, cnpj, cep, atuacao, numero_endereco) VALUES (:id_login, :razao, :telefone, :complemento, :cnpj, :cep, :ramo, :numero)";
+
+    $comando = $conexao->prepare($sql);
+
+    $comando->bindValue(':id_login', $id_login);
+    $comando->bindValue(':razao', $dados['razao']);
+    $comando->bindValue(':telefone', $dados['telefoneEmp']);
+    $comando->bindValue(':complemento', $dados['complementoEmp']);
+    $comando->bindValue(':cnpj', $dados['cnpj']);
+    $comando->bindValue(':cep', $dados['cepEmp']);
+    $comando->bindValue(':ramo', $dados['ramo']);
+    $comando->bindValue(':numero', $dados['numeroEmp']);
+
+    if ($comando->execute()) {
+        return "sucesso";
+    } else {
+        return "Erro ao cadastrar empresa!";
+    }
+}
+
+    // =============================================Cadastro de Empresa======================================

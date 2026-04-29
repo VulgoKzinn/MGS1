@@ -1,5 +1,6 @@
 <!-- KAUÃ -->
 <?php
+session_start(); // inicia a sessão
 require_once "backend/includes/funcoes.php";
 
 $mensagem = '';
@@ -8,14 +9,30 @@ if (isset($_POST['cadastrar'])) {
     // captura a senha preenchido pelo usuario
     $senha =  filter_input(INPUT_POST, 'senha');
     $confirma =  filter_input(INPUT_POST, 'confirma');
-    $empresa = filter_input(INPUT_POST, 'empresa');
+    $empresa = isset($_POST['empresa']) ? 1 : 0;
 
-    if ($senha == '' && $confirma == '') {
+    if ($senha == '' || $confirma == ''){
         $mensagem = 'Preencha a senha!';
     } elseif ($senha !== $confirma) {
         $mensagem = 'Senhas não conferem!';
     } else {
-        $mensagem = validaEmail($email, $senha, $empresa);
+        $retorno = validaEmail($email, $senha, $empresa);
+
+if (is_numeric($retorno)) {
+
+    $id_login = $retorno;
+
+    if ($empresa == 1) {
+
+        $_SESSION['id_login'] = $id_login; //  GUARDA O ID CERTO
+
+        header("Location: cadastro-empresa.php");
+        exit;
+    }
+
+} else {
+    $mensagem = $retorno;
+}
     }
 }
 
@@ -49,16 +66,15 @@ if (isset($_POST['cadastrar'])) {
                 <input type="email" class="form-control" name="email" placeholder="email@exemplo.com" required>
             </div>
 
-            Senha
             <div class="mb-3">
                 <label class="form-label">Senha</label>
-                <input type="password" class="form-control" name="senha" placeholder="••••••••" required>
+                <input type="password" class="form-control" name="senha" placeholder="Digite sua senha" required>
             </div>
 
             <!-- Confirmar senha -->
             <div class="mb-3">
                 <label class="form-label">Confirmar senha</label>
-                <input type="password" class="form-control" name="confirma" placeholder="••••••••" required>
+                <input type="password" class="form-control" name="confirma" placeholder="Confirme sua senha" required>
             </div>
 
             <!-- Confir Empresa -->
