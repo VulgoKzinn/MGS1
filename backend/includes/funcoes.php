@@ -293,3 +293,126 @@ function listachamado()
 }
 // ============================================Lista Chamado============================================
 
+// ===========================================Cadastrar Vaga=======================================================
+function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$localizacao,$salario,$beneficio,$carga_horaria,$descricao,$requisitos)
+{
+    try {
+        global $conexao;
+
+        $sql = "INSERT INTO tb_vagas(vaga,area_atuacao,modalidade,modelo_de_trabalho,localizacao,salario,beneficio,carga_horaria,descricao,requisitos)VALUES(:vaga,:area_atuacao,:modalidade,:modelo_de_trabalho,:localizacao,:salario,:beneficio,:carga_horaria,:descricao,:requisitos)";
+
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':vaga',$vaga);
+        $comando->bindValue(':area_atuacao',$area_atuacao);
+        $comando->bindValue(':modalidade',$modalidade);
+        $comando->bindValue(':modelo_de_trabalho',$modelo_de_trabalho);
+        $comando->bindValue(':localizacao',$localizacao);
+        $comando->bindValue(':salario',$salario);
+        $comando->bindValue(':beneficio',$beneficio);
+        $comando->bindValue(':carga_horaria',$carga_horaria);
+        $comando->bindValue(':descricao',$descricao);
+        $comando->bindValue(':requisitos',$requisitos);
+
+        $comando->execute();
+
+        //retorna o id do insert do produto acima
+       return $conexao->lastInsertId();
+
+       header('Location: cadastro-vaga.php');
+
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        //echo $err->getMessage();
+        return "Erro ao cadastrar";
+        
+    }
+    
+    $conexao = null;
+}
+
+// ===========================================Função upload imagem=======================================================
+function uploadImagem($imagem){
+
+    //define a pasta para upload
+    $pasta = "assets/img/uploads/";
+
+    //captura a extensão da imagem
+    //strtolower passa a extensão para minusculo
+    $extensao = strtolower(pathinfo($imagem['name'], PATHINFO_EXTENSION));
+
+    //gera um nome aleatorio para imagem e junta com a extensão
+    //ponto é soma
+    $nomeUpload = md5(uniqid()) . '.' . $extensao;
+
+    //faz o upload da imagem
+    move_uploaded_file($imagem['tmp_name'],$pasta . $nomeUpload);
+
+    //retorna o nome da imagem(hash)
+    return $nomeUpload;
+}
+
+// ===========================================Cadastrar Imagem Vaga=======================================================
+function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
+    try {
+        global $conexao;
+        $sql = "INSERT INTO tb_img_vaga(imagem,id_vaga)VALUES(:nomeImagemUpload,:idVaga)";
+
+        $comando = $conexao->prepare($sql);
+
+        $comando->bindValue(':nomeImagemUpload', $nomeImagemUpload);
+        $comando->bindValue(':idVaga',$idVaga);
+        $comando->execute();
+
+        header('Location: perfil-empresa.php');
+
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao cadastrar";
+    }
+}
+
+// ===========================================Lista as Vagas=======================================================
+function listaVaga(){
+
+try {
+    global $conexao;
+    $sql = "SELECT * FROM tb_vagas";
+
+    $comando = $conexao->prepare($sql);
+    $comando->execute();
+    return $comando->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $err) {
+    error_log($err->getMessage());
+    return "Erro ao conectar no banco de dados";
+}
+// ANULA A CONEXAO COM O BANCO
+$conexao = null;
+}
+
+// ===========================================Traz informações da Vaga=======================================================
+function listaVagaId($idVaga){
+
+try {
+    global $conexao;
+    $sql = "SELECT * FROM tb_vagas WHERE id = :idVaga";
+
+    $comando = $conexao->prepare($sql);
+    $comando->bindValue(':idVaga', $idVaga);
+    $comando->execute();
+    return $comando->fetch(PDO::FETCH_ASSOC);
+
+} catch (PDOException $err) {
+    error_log($err->getMessage());
+    return "Erro ao conectar no banco de dados";
+}
+}
+
+// ===========================================Traz informações da Vaga=======================================================
+function deletarVaga($id){
+    try {
+        
+    } catch (\Throwable $th) {
+        
+    }
+}

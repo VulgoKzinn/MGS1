@@ -1,4 +1,31 @@
-<!-- KAUÃ -->
+<!-- SABRINA -->
+<?php
+require_once "backend/includes/funcoes.php";
+
+
+//caso seja clicado no botão cadastrar a função é executada
+if (isset($_POST['cadastrar'])) {
+    $vaga = filter_input(INPUT_POST, 'vaga');
+    $area_atuacao = filter_input(INPUT_POST, 'area_atuacao');
+    $modalidade = filter_input(INPUT_POST, 'modalidade');
+    $modelo_de_trabalho = filter_input(INPUT_POST, 'modelo_de_trabalho');
+    $localizacao = filter_input(INPUT_POST, 'localizacao');
+    $salario = filter_input(INPUT_POST, 'salario');
+    $beneficio = filter_input(INPUT_POST, 'beneficio');
+    $carga_horaria = filter_input(INPUT_POST, 'carga_horaria');
+    $descricao = filter_input(INPUT_POST, 'descricao');
+    $requisitos = filter_input(INPUT_POST, 'requisitos');
+
+    $idVaga = cadastrarVaga($vaga, $area_atuacao, $modalidade, $modelo_de_trabalho, $localizacao, $salario, $beneficio, $carga_horaria, $descricao, $requisitos);
+
+    //executa a função de upload da imagem, enviando o id do produto e a imagem para upload
+    $nomeImagemUpload = uploadImagem($_FILES['imagem']);
+    
+    cadastrarImagemVaga($idVaga, $nomeImagemUpload);
+}
+
+?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -6,10 +33,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastro Vaga| Matchwork</title>
-   <!-- Include Links -->
-   <?php
-   require_once 'assets/templates/head.php';
-   ?>
+
+    <!-- Include Links -->
+    <?php
+    require_once 'assets/templates/head.php';
+    ?>
 </head>
 
 <body id="cadastroCand">
@@ -22,91 +50,94 @@
         <form action="" method="post" class="p-4">
             <h2 class="text-center mb-4">Anunciar Nova Vaga</h2>
 
-            <!-- Primeira linha -->
             <div class="row mb-3">
-                <div class="col-md-4">
-                    <label for="area-atuacao" class="form-label">Área de Atuação</label>
-                    <input type="text" class="form-control" id="area-atuacao" required>
+
+                <div class="col-md-4 mb-3">
+                    <label for="vaga" class="form-label">Nome da Vaga</label>
+                    <input type="text" class="form-control" name="vaga" id="vaga" required>
                 </div>
 
-                <div class="col-md-4">
+
+                <div class="col-md-4 mb-3">
+                    <label for="area_atuacao" class="form-label">Área de Atuação</label>
+                    <input type="text" class="form-control" name="area_atuacao" id="area_atuacao" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
                     <label for="modalidade" class="form-label">Modalidade da Vaga</label>
-                    <select name="modalidade" id="modalidade" required>
+                    <select class="form-select" name="modalidade" name="modalidade" id="modalidade" required>
+                        <option value="" selected disabled>Selecione...</option>
+                        <option value="Presencial">CLT</option>
+                        <option value="Home Office">PJ</option>
+                        <option value="Híbrido">Estágio</option>
+                        <option value="Híbrido">Freelancer</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="modelo_de_trabalho" class="form-label">Modelo de Trabalho</label>
+                    <select class="form-select" name="modelo_de_trabalho" id="modelo_de_trabalho" required>
                         <option value="" selected disabled>Selecione...</option>
                         <option value="Presencial">Presencial</option>
-                        <option value="Home Office">Home Office</option>
+                        <option value="Home Office">Home-Office</option>
                         <option value="Híbrido">Híbrido</option>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label for="emailEmp" class="form-label">E-mail Corporativo</label>
-                    <input type="email" class="form-control" id="emailEmp" placeholder="contato@empresa.com">
+
+                <div class="col-md-4 mb-3">
+                    <label for="localizacao" class="form-label">Cidade / Estado</label>
+                    <input type="text" class="form-control" name="localizacao" id="localizacao" required>
                 </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="salario" class="form-label">Salário</label>
+                    <input type="text" class="form-control" name="salario" id="salario" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="beneficio" class="form-label">Benefícios</label>
+                    <input type="text" class="form-control" name="beneficio" id="beneficio" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="carga_horaria" class="form-label">Carga Horária</label>
+                    <input type="text" class="form-control" name="carga_horaria" id="carga_horaria">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="descricao" class="form-label">Descrição da Vaga</label>
+                    <textarea class="form-control" name="descricao" id="descricao" rows="4" required></textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="requisitos" class="form-label">Requisitos</label>
+                    <textarea class="form-control" name="requisitos" id="requisitos" rows="4" required></textarea>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="imagem" class="form-label">Foto da Vaga</label>
+                    <input value="cadastrar" type="file" class="form-control" name="imagem" id="imagem">
+                </div>
+
             </div>
 
-            <!-- Segunda linha -->
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label for="telefoneEmp" class="form-label">Telefone</label>
-                    <input type="tel" class="form-control" id="telefoneEmp" placeholder="(XX) XXXXX-XXXX">
-                </div>
-                <div class="col-md-4">
-                    <label for="cepEmp" class="form-label">CEP</label>
-                    <input type="text" class="form-control" id="cepEmp" placeholder="00000-000">
-                </div>
-                <div class="col-md-4">
-                    <label for="cepEmp" class="form-label">Número</label>
-                    <input type="number" class="form-control" id="numeroEmp" placeholder="Nº 30">
-                </div>
-                </div>
-            </div>
 
-            <!-- Terceira linha -->
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label for="cepEmp" class="form-label">Complemnto</label>
-                    <input type="text" class="form-control" id="complementoEmp" placeholder="Casa">
-                </div>
-                <div class="col-md-4">
-                    <label for="area" class="form-label">Ramo de Atuação</label>
-                    <select class="form-select" name="" id="">
-                        <option value="" disabled selected>Selecione...</option>
-                    </select>
-                </div>
-                <div class="col-md-4 d-flex align-items-center">
-                    <div class="form-check mt-4">
-                        <input class="form-check-input" type="checkbox" id="pcd">
-                        <label class="form-check-label" for="pcd">
-                            Contrato Pessoa com Deficiência (PCD)
-                        </label>
-                    </div>
-                </div>
-            </div>
 
             <!-- Botão -->
             <div class="text-end">
-                <button type="submit"
-                                class="btn btn-success">Próximo</button>
+                <button name="cadastrar" value="cadastrar" type="submit"
+                    class="btn btn-success">Cadastrar</button>
             </div>
         </form>
     </main>
 
 
 
-   <!-- Include JS -->
-   <?php
-   require_once 'assets/templates/js.php';
-   ?>
-    <script>
-        $(document).ready(function () {
-            $('#cnpj').mask('00.000.000/0000-00');   // CNPJ
-            $('#telefoneEmp').mask('(00) 00000-0000'); // Telefone
-            $('#cepEmp').mask('00000-000');          // CEP
-            $('#numeroEmp').mask('0000');          // NÚMERO
-        });
+    <!-- Include JS -->
+    <?php
+    require_once 'assets/templates/js.php';
+    ?>
 
-        $('.selectpicker').selectpicker('refresh');
-    </script>
 
 </body>
 

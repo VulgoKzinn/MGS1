@@ -1,8 +1,16 @@
 <?php
 require_once "backend/includes/funcoes.php";
-validaAcesso();
-$id_nivel = $_SESSION['id_nivel'];
-validaUsuario($id_nivel);
+// validaAcesso();
+// $id_nivel = $_SESSION['id_nivel'];
+// validaUsuario($id_nivel);
+
+//captura o ID da vaga
+// $id = $_GET['id'];
+
+//guarda os dados da vaga
+$vagas = listaVaga();
+
+
 
 ?>
 <!-- SABRINA -->
@@ -99,101 +107,116 @@ validaUsuario($id_nivel);
 
          <!--FAÇA PARTE DO NOSSO TIME-->
 
+
          <!-- Título Topo -->
          <div class="faca-parte text-center mt-5 pt-5 mb-5">
             <h1 class="text-center mt-5">FAÇA PARTE DO NOSSO TIME</h1>
          </div>
 
-         <div class="container mt-5">
-            <div class="info-vaga p-4">
+         <?php
+         foreach ($vagas as $vaga):
+         ?>
 
-               <!-- Título -->
-               <div class="text-center mb-4">
-                  <h2 class="fw-bold text-white">Analista de marketing digital</h2>
+            <div class="container mt-5">
+               <div class="info-vaga p-4">
+
+
+                  <!-- Título -->
+                  <div class="text-center mb-4">
+                     <h2 class="fw-bold text-white"><?php echo $vaga['vaga']; ?></h2>
+                  </div>
+
+                  <div class="row g-3">
+
+                     <!-- IMAGEM -->
+
+                     <div class="col-12 text-center">
+                        <img src="assets/img/perfil-empresa/amazon-empresa.jpg" class="img-fluid rounded">
+                     </div>
+
+                     <!-- CAMPOS PEQUENOS -->
+                     <div class="col-md-6">
+                        <label class="form-label text-light">Área de Atuação</label>
+                        <div class="form-control custom-box"><?php echo $vaga['area_atuacao']; ?></div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label class="form-label text-light">Modalidade da Vaga</label>
+                        <div class="form-control custom-box"><?php echo $vaga['modalidade']; ?></div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label class="form-label text-light">Modelo de Trabalho</label>
+                        <div class="form-control custom-box"><?php echo $vaga['modelo_de_trabalho']; ?></div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label class="form-label text-light">Localização</label>
+                        <div class="form-control custom-box"><?php echo $vaga['localizacao']; ?></div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label class="form-label text-light">Salário</label>
+                        <div class="form-control custom-box"><?php echo $vaga['salario']; ?></div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label class="form-label text-light">Benefícios</label>
+                        <div class="form-control custom-box">
+                           <?php
+                           echo $vaga['beneficio'];
+                           ?>
+                        </div>
+                     </div>
+
+                     <!-- CAMPOS GRANDES -->
+                     <div class="col-12">
+                        <label class="form-label text-light">Carga Horária</label>
+                        <div class="form-control custom-box"><?php echo $vaga['carga_horaria']; ?></div>
+                     </div>
+
+                     <div class="col-12">
+                        <label class="form-label text-light">Descrição da Vaga</label>
+                        <div class="form-control custom-box area-grande">
+                           <?php
+                           echo $vaga['descricao'];
+                           ?>
+                        </div>
+                     </div>
+
+                     <div class="col-12">
+                        <label class="form-label text-light">Requisitos</label>
+                        <div class="form-control custom-box area-grande">
+                           <?php
+                           echo $vaga['requisitos'];
+                           ?>
+                        </div>
+                     </div>
+
+                  </div>
+
                </div>
+            <?php
+         endforeach;
+            ?>
+            </div>
 
-               <div class="row g-3">
+            <!--CANAIS OFICIAIS-->
+            <div class="rodape mt-5 py-4 text-center">
 
-                  <!-- IMAGEM -->
+               <div class="container">
 
-                  <div class="col-12 text-center">
-                     <img src="assets/img/perfil-empresa/amazon-empresa.jpg" class="img-fluid rounded">
-                  </div>
+                  <h5 class="mb-3 titulo-rodape">CANAIS OFICIAIS</h5>
 
-                  <!-- CAMPOS PEQUENOS -->
-                  <div class="col-md-6">
-                     <label class="form-label text-light">Área de Atuação</label>
-                     <div class="form-control custom-box">Marketing</div>
-                  </div>
-
-                  <div class="col-md-6">
-                     <label class="form-label text-light">Modalidade da Vaga</label>
-                     <div class="form-control custom-box">Período Integral</div>
-                  </div>
-
-                  <div class="col-md-6">
-                     <label class="form-label text-light">Modelo de Trabalho</label>
-                     <div class="form-control custom-box">Híbrido</div>
-                  </div>
-
-                  <div class="col-md-6">
-                     <label class="form-label text-light">Localização</label>
-                     <div class="form-control custom-box">São João da Boa Vista - SP</div>
-                  </div>
-
-                  <div class="col-md-6">
-                     <label class="form-label text-light">Salário</label>
-                     <div class="form-control custom-box">A Combinar</div>
-                  </div>
-
-                  <div class="col-md-6">
-                     <label class="form-label text-light">Benefícios</label>
-                     <div class="form-control custom-box">
-                        Vale Refeição, Vale Transporte e Plano de Saúde
-                     </div>
-                  </div>
-
-                  <!-- CAMPOS GRANDES -->
-                  <div class="col-12">
-                     <label class="form-label text-light">Carga Horária</label>
-                     <div class="form-control custom-box">40 horas semanais</div>
-                  </div>
-
-                  <div class="col-12">
-                     <label class="form-label text-light">Descrição da Vaga</label>
-                     <div class="form-control custom-box area-grande">
-                        Lorem ipsum...
-                     </div>
-                  </div>
-
-                  <div class="col-12">
-                     <label class="form-label text-light">Requisitos</label>
-                     <div class="form-control custom-box area-grande">
-                        Lorem ipsum...
-                     </div>
+                  <div class="d-flex justify-content-center gap-4">
+                     <i class="fa-brands fa-facebook icone"></i>
+                     <i class="fa-brands fa-instagram icone"></i>
+                     <i class="fa-solid fa-earth-americas icone"></i>
                   </div>
 
                </div>
 
             </div>
-         </div>
-
-         <!--CANAIS OFICIAIS-->
-         <div class="rodape mt-5 py-4 text-center">
-
-   <div class="container">
-
-      <h5 class="mb-3 titulo-rodape">CANAIS OFICIAIS</h5>
-
-      <div class="d-flex justify-content-center gap-4">
-         <i class="fa-brands fa-facebook icone"></i>
-         <i class="fa-brands fa-instagram icone"></i>
-         <i class="fa-solid fa-earth-americas icone"></i>
-      </div>
-
-   </div>
-
-</div>
 
 
       </main>

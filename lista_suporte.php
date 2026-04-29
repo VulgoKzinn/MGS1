@@ -76,7 +76,7 @@ $listachamados = listachamado();
                                 </td>
 
                                 <td>
-                                    <?=($listachamado['descricao']) ?>
+                                    <?= ($listachamado['descricao']) ?>
                                 </td>
 
                                 <td>
@@ -109,10 +109,7 @@ $listachamados = listachamado();
                                             <button class="btn btn-sm btn-success">
                                                 <p>Em Aberto</p>
                                             </button>
-                                        <?php else: ?>
-                                            <button class="btn btn-sm btn-danger">
-                                                <p>Encerrado</p>
-                                            </button>
+                
                                         <?php endif; ?>
                                     </a>
                                 </td>
