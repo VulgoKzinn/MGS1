@@ -78,6 +78,7 @@ if (isset($_POST['login'])) {
     <?php if (isset($_GET['cadastro'])): ?>
 
         <script>
+
             <?php if ($_GET['cadastro'] == 'sucesso'): ?>
 
                 Swal.fire({
@@ -99,6 +100,7 @@ if (isset($_POST['login'])) {
                 });
 
             <?php endif; ?>
+            
         </script>
 
     <?php endif; ?>
