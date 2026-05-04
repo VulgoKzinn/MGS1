@@ -17,7 +17,7 @@ $id_login = $_SESSION['id_login'];
 // =============================================Cadastro de Empresa======================================
 
 if (isset($_POST['cadastrarEmp'])) {
-        
+
     if (empty($_POST['razao']) || empty($_POST['cnpj'])) {
         $mensagem = "Preencha os campos obrigatórios!";
     } else {
@@ -25,7 +25,8 @@ if (isset($_POST['cadastrarEmp'])) {
         $retorno = cadastrarEmpresa($_POST, $id_login);
 
         if ($retorno === "sucesso") {
-            header("Location: criarConta.php");
+             unset($_SESSION['id_login']);
+            header("Location: login.php?cadastro=empresa_sucesso");
             exit;
         } else {
             $mensagem = $retorno;
@@ -73,7 +74,7 @@ if (isset($_POST['cadastrarEmp'])) {
                 </div>
                 <div class="col-md-6">
                     <label for="cnpj" class="form-label">CNPJ</label>
-                    <input type="text" class="form-control" name="cnpj" id="cnpj" placeholder="00.000.000/0000-00">
+                    <input type="text" class="form-control" name="cnpj" id="cnpj" maxlength="18" placeholder="00.000.000/0000-00">
                 </div>
 
             </div>
@@ -82,11 +83,11 @@ if (isset($_POST['cadastrarEmp'])) {
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label for="telefoneEmp" class="form-label">Telefone</label>
-                    <input type="tel" class="form-control" name="telefoneEmp" id="telefoneEmp" placeholder="(XX) XXXXX-XXXX">
+                    <input type="tel" class="form-control" name="telefoneEmp" id="telefoneEmp" maxlength="15" placeholder="(XX) XXXXX-XXXX">
                 </div>
                 <div class="col-md-4">
                     <label for="cepEmp" class="form-label">CEP</label>
-                    <input type="text" class="form-control" name="cepEmp" id="cepEmp" placeholder="00000-000">
+                    <input type="text" class="form-control" name="cepEmp" id="cepEmp" maxlength="9" placeholder="00000-000">
                 </div>
                 <div class="col-md-4">
                     <label for="cepEmp" class="form-label">Número</label>
@@ -145,6 +146,7 @@ if (isset($_POST['cadastrarEmp'])) {
 
         $('.selectpicker').selectpicker('refresh');
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
