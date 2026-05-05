@@ -209,8 +209,12 @@ function criarConta($email, $senha, $empresa)
         $comando->bindValue(':senha', $senhaHash);
         $comando->bindValue(':id_nivel', $empresa);
         $comando->execute();
+<<<<<<< Updated upstream
 
         return "E-mail cadastrado com sucesso!";
+=======
+        return $conexao->lastInsertId();
+>>>>>>> Stashed changes
     } catch (PDOException $err) {
         error_log($err->getMessage());
         return "Erro ao cadastrar usuario!";
@@ -316,10 +320,16 @@ function cadastrarVaga($vaga,$area_atuacao,$modalidade,$modelo_de_trabalho,$loca
         $comando->execute();
 
         //retorna o id do insert do produto acima
+<<<<<<< Updated upstream
        return $conexao->lastInsertId();
 
        header('Location: cadastro-vaga.php');
 
+=======
+        // return $conexao->lastInsertId();
+
+        header('Location: editar-vaga.php');
+>>>>>>> Stashed changes
     } catch (PDOException $err) {
         error_log($err->getMessage());
         //echo $err->getMessage();
@@ -374,7 +384,139 @@ function cadastrarImagemVaga($idVaga,$nomeImagemUpload){
 // ===========================================Lista as Vagas=======================================================
 function listaVaga(){
 
+<<<<<<< Updated upstream
 try {
+=======
+    try {
+        global $conexao;
+        $sql = "SELECT * FROM tb_vagas";
+
+        $comando = $conexao->prepare($sql);
+        $comando->execute();
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao conectar no banco de dados";
+    }
+    // ANULA A CONEXAO COM O BANCO
+    $conexao = null;
+}
+
+// ===========================================Traz informações da Vaga=======================================================
+function listaVagaId($idVaga)
+{
+
+    try {
+        global $conexao;
+        $sql = "SELECT * FROM tb_vagas WHERE id = :idVaga";
+
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':idVaga', $idVaga);
+        $comando->execute();
+        return $comando->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao conectar no banco de dados";
+    }
+}
+
+// ===========================================Traz informações da Vaga=======================================================
+
+// =============================================Atualiza os dados da Vaga(EDITAR)======================================
+function atualizarVaga($vaga,$area_atuacao,$modalidade,$localizacao,$descricao,$requisitos,$salario,$beneficio,$carga_horaria,$modelo_de_trabalho,$id)
+{
+    try {
+        global $conexao;
+
+        $sql = "UPDATE tb_vaga SET
+        vaga = :vaga,
+        area_atuacao = :area_atuacao,
+        modalidade = :modalidade,
+        localizacao = :localizacao,
+        descricao = :descricao,
+        requisitos = :requisitos,
+        salario = :salario,
+        beneficio = :beneficio,
+        carga_horaria = :carga_horaria,
+        modelo_de_trabalho = :modelo_de_trabalho
+        WHERE id = :id";
+
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':vaga',$vaga);
+        $comando->bindValue(':area_atuacao',$area_atuacao);
+        $comando->bindValue(':modalidade',$modalidade);
+        $comando->bindValue(':localizacao',$localizacao);
+        $comando->bindValue(':descricao',$descricao);
+        $comando->bindValue(':requisitos',$requisitos);
+        $comando->bindValue(':salario',$salario);
+        $comando->bindValue(':beneficio',$beneficio);
+        $comando->bindValue(':carga_horaria',$carga_horaria);
+        $comando->bindValue(':modelo_de_trabalho',$modelo_de_trabalho);
+        $comando->bindValue(':id',$id);
+        
+        $comando->execute();
+
+        return "Dados atualizados com sucesso!";
+        
+    } catch (PDOException $err) {
+       error_log($err->getMessage());
+       return "Erro ao atualizar!";
+    }
+
+    $conexao = null;
+}
+// =============================================Atualiza os dados da Vaga(EDITAR)======================================
+
+// =============================================Atualiza a Imagem da Vaga(EDITAR)======================================
+function tualizarImagemVaga($id,$nomeImagemUpload)
+{
+    try {
+        global $conexao;
+        $sql = "UPDATE tb_img_vaga SET imagem= :nomeImagemUpload WHERE
+        id_vaga = ;idVaga";
+
+        $comando = $conexao->prepare($sql);
+
+        $comando->bindValue(':nomeImagemUpload', $nomeImagemUpload);
+        $comando->bindValue(':idVaga', $idVaga);
+        $comando->execute();
+
+        header('Location: perfil-empresa.php');
+
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return "Erro ao cadastrar";
+    }
+}
+// =============================================Atualiza a Imagem da Vaga(EDITAR)======================================
+
+
+// ============================================Lista Atuacao============================================
+function listaAtuacao()
+{
+    try {
+        global $conexao;
+        $sql = "SELECT * FROM tb_ramoatuacao";
+
+        $comando = $conexao->prepare($sql);
+        $comando->execute();
+
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        echo $err->getMessage();
+
+        return "Erro ao listar";
+    }
+}
+// ============================================Lista Atuacao============================================
+
+
+// =============================================Cadastro de Empresa======================================
+function cadastrarEmpresa($dados, $id_login)
+
+{
+>>>>>>> Stashed changes
     global $conexao;
     $sql = "SELECT * FROM tb_vagas";
 

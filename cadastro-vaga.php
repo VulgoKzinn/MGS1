@@ -42,7 +42,7 @@ if (isset($_POST['cadastrar'])) {
 
 <body id="cadastroCand">
     <div id="ImgLogon">
-        <a href="index.php"><img src="assets/img/Logomaior.png" alt="Logo"></a>
+        <a href="perfil-empresa.php"><img src="assets/img/Logomaior.png" alt="Logo"></a>
     </div>
 
     <!-- Formulário -->
