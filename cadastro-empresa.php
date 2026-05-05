@@ -7,8 +7,8 @@ $listaAtuacaos = listaAtuacao();
 // ============================================Trazendo id_login============================================
 session_start();
 
-if (!isset($_SESSION['id_login'])) {
-    header("Location: criarConta.php");
+ if (!isset($_SESSION['id_login'])) {
+    header("Location: login.php");
     exit;
 }
 
@@ -25,7 +25,6 @@ if (isset($_POST['cadastrarEmp'])) {
         $retorno = cadastrarEmpresa($_POST, $id_login);
 
         if ($retorno === "sucesso") {
-             unset($_SESSION['id_login']);
             header("Location: login.php?cadastro=empresa_sucesso");
             exit;
         } else {

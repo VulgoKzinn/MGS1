@@ -27,7 +27,7 @@ function login($email, $senha)
                     session_start();
 
                     // guarda o s_temp (senha temporario) 
-                    $_SESSION['id'] = $dados['id'];
+                    $_SESSION['id_login'] = $dados['id'];
                     // guarda o s_temp (senha temporario) 
                     $_SESSION['sistema'] = 'sis_login';
                     // guarda o email 
@@ -59,7 +59,9 @@ function login($email, $senha)
 
 function validaAcesso()
 {
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     if ($_SESSION['sistema'] != 'sis_login') {
         header('Location: index.php');
@@ -130,7 +132,7 @@ function novaSenha($senha)
     try {
         global $conexao;
 
-        $idUsuario = $_SESSION['id'];
+        $idUsuario = $_SESSION['id_login'];
         $sql = "UPDATE tb_login SET senha=:senha, s_temp=0 WHERE id=:id";
 
         $senha_hash = password_hash($senha, PASSWORD_ARGON2ID);
