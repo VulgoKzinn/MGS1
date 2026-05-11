@@ -7,7 +7,7 @@ $vagas = listaVaga();
 //variavel de controle
 $operacao = '';
 
-if(isset($_GET['acao']) && $_GET['acao'] == 'editar'){
+if (isset($_GET['acao']) && $_GET['acao'] == 'editar') {
     //captura o id para edição
     $idVaga = $_GET['id'];
 
@@ -17,28 +17,28 @@ if(isset($_GET['acao']) && $_GET['acao'] == 'editar'){
     $operacao = 'editar';
 }
 
-if(isset($_POST['editar'])){
-    $vaga =filter_input(INPUT_POST,'vaga');
-    $area_atuacao =filter_input(INPUT_POST,'area_atuacao');
-    $modalidade =filter_input(INPUT_POST,'modalidade');
-    $localizacao =filter_input(INPUT_POST,'localizacao');
-    $descricao =filter_input(INPUT_POST,'descricao');
-    $requisitos =filter_input(INPUT_POST,'requisitos');
-    $salario =filter_input(INPUT_POST,'salario');
-    $beneficio =filter_input(INPUT_POST,'beneficio');
-    $carga_horaria =filter_input(INPUT_POST,'carga_horaria');
-    $data_cadastro =filter_input(INPUT_POST,'data_cadastro');
-    $modelo_de_trabalho =filter_input(INPUT_POST,'modelo_de_trabalho');
-    $id =filter_input(INPUT_POST, 'id');
+if (isset($_POST['editar'])) {
+    $vaga = filter_input(INPUT_POST, 'vaga');
+    $area_atuacao = filter_input(INPUT_POST, 'area_atuacao');
+    $modalidade = filter_input(INPUT_POST, 'modalidade');
+    $localizacao = filter_input(INPUT_POST, 'localizacao');
+    $descricao = filter_input(INPUT_POST, 'descricao');
+    $requisitos = filter_input(INPUT_POST, 'requisitos');
+    $salario = filter_input(INPUT_POST, 'salario');
+    $beneficio = filter_input(INPUT_POST, 'beneficio');
+    $carga_horaria = filter_input(INPUT_POST, 'carga_horaria');
+    $data_cadastro = filter_input(INPUT_POST, 'data_cadastro');
+    $modelo_de_trabalho = filter_input(INPUT_POST, 'modelo_de_trabalho');
+    $id = filter_input(INPUT_POST, 'id');
 
-    $mensagem = atualizarVaga($vaga,$area_atuacao,$modalidade,$localizacao,$descricao,$requisitos,$salario,$beneficio,$carga_horaria,$data_cadastro,$modelo_de_trabalho,$id);
+    $mensagem = atualizarVaga($vaga, $area_atuacao, $modalidade, $localizacao, $descricao, $requisitos, $salario, $beneficio, $carga_horaria, $data_cadastro, $modelo_de_trabalho, $id);
 
     //só realiza o upload e update se existir uma nova imagem
-    if(!empty($_FILES['imagem']['name'])){
+    if (!empty($_FILES['imagem']['name'])) {
         //realiza o upload da imagem
         $nomeImagemUpload = uploadImagem($_FILES['imagem']);
         //atualiza o nome da imagem no banco de dados
-        atualizarImagemVaga($id,$nomeImagemUpload);
+        atualizarImagemVaga($id, $nomeImagemUpload);
     }
 }
 
@@ -67,64 +67,123 @@ if(isset($_POST['editar'])){
 
     <!-- CONTEÚDO -->
     <main id="CadCand" class="container">
+
         <div class="row justify-content-center">
 
+            <div class="col-12">
 
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
 
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body p-0">
-                    <table class="table table-hover align-middle text-center mb-0">
+                    <div class="card-body p-0">
 
-                        <thead class="table-primary">
-                            <tr>
-                                <th>ID</th>
-                                <th>Vaga</th>
-                                <th>Área de Atuação</th>
-                                <th>Data de Cadastro</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
+                        <table class="table table-hover align-middle text-center mb-0">
 
-                        <tbody>
-
-                            <?php foreach ($vagas as $vaga): ?>
+                            <!-- TOPO TABELA -->
+                            <thead>
 
                                 <tr>
 
-                                    <td><?= $vaga['id']; ?></td>
+                                    <th class="py-3 border-0"
+                                        style="background-color: #198754; color: white;">
+                                        ID
+                                    </th>
 
-                                    <td class="fw-semibold">
-                                        <?= $vaga['vaga']; ?>
-                                    </td>
+                                    <th class="py-3 border-0"
+                                        style="background-color: #198754; color: white;">
+                                        Vaga
+                                    </th>
 
-                                    <td>
-                                        <?= $vaga['area_atuacao']; ?>
-                                    </td>
+                                    <th class="py-3 border-0"
+                                        style="background-color: #198754; color: white;">
+                                        Área de Atuação
+                                    </th>
 
-                                    <td>
-                                        <?= date('d/m/Y', strtotime($vaga['data_cadastro'])); ?>
-                                    </td>
+                                    <th class="py-3 border-0"
+                                        style="background-color: #198754; color: white;">
+                                        Data de Cadastro
+                                    </th>
 
-                                    <td>
-                                        <a href="produto-gerenciar.php?acao=editar&id=<?php echo $vaga['id']; ?>">
-                                            <button type="button" class="btn btn-primary btn-dark  btn-sm mt-1 w-75">Editar</button>
-                                        </a>
-
-                                        <a href="produto-gerenciar.php?acao=deletar&id=<?php echo $vaga['id']; ?>">
-                                            <button type="button" class="btn btn-secondary btn-danger  btn-sm mt-1  w-75" onclick="return confirm('Tem certeza que deseja excluir?')">Deletar</button>
-                                        </a>
-                                    </td>
+                                    <th class="py-3 border-0"
+                                        style="background-color: #198754; color: white;">
+                                        Ações
+                                    </th>
 
                                 </tr>
 
-                            <?php endforeach; ?>
+                            </thead>
 
-                        </tbody>
+                            <!-- CORPO -->
+                            <tbody>
 
-                    </table>
+                                <?php foreach ($vagas as $vaga): ?>
+
+                                    <tr>
+
+                                        <!-- ID -->
+                                        <td>
+                                            <?= $vaga['id']; ?>
+                                        </td>
+
+                                        <!-- VAGA -->
+                                        <td class="fw-semibold">
+                                            <?= $vaga['vaga']; ?>
+                                        </td>
+
+                                        <!-- ÁREA -->
+                                        <td>
+                                            <?= $vaga['area_atuacao']; ?>
+                                        </td>
+
+                                        <!-- DATA -->
+                                        <td>
+                                            <?= date('d/m/Y', strtotime($vaga['data_cadastro'])); ?>
+                                        </td>
+
+                                        <!-- AÇÕES -->
+                                        <td>
+
+                                            <!-- EDITAR -->
+                                            <a href="produto-gerenciar.php?acao=editar&id=<?php echo $vaga['id']; ?>">
+
+                                                <button type="button"
+                                                    class="btn btn-dark btn-sm mt-1 w-75">
+
+                                                    Editar
+
+                                                </button>
+
+                                            </a>
+
+                                            <!-- DELETAR -->
+                                            <a href="produto-gerenciar.php?acao=deletar&id=<?php echo $vaga['id']; ?>">
+
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm mt-1 w-75"
+                                                    onclick="return confirm('Tem certeza que deseja excluir?')">
+
+                                                    Deletar
+
+                                                </button>
+
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+
+                                <?php endforeach; ?>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </div>
+
             </div>
+
+        </div>
 
     </main>
 
