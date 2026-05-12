@@ -18,8 +18,6 @@ $mensagem=suporte($nome, $email, $descricao);
     <title>MGS | Suporte</title>
 
     <?php require_once 'assets/templates/head.php'; ?>
-
-
 </head>
 
 <body id="cadastroCand">
@@ -49,12 +47,6 @@ $mensagem=suporte($nome, $email, $descricao);
                 <!-- FORMULÁRIO -->
                 <div class="card p-4 shadow-sm">
                     <h4 class="mb-3">Envie uma mensagem</h4>
-                                    <!-- BOTÃO VOLTAR PADRÃO PERSONALIZADO -->
-                            <div class="d-flex justify-content-end mb-4">
-                                <a href="pag_inicial.php" class="btn-voltar-projeto">
-                                    <i class="fa-solid fa-chevron-left"></i> Voltar para Início
-                                </a>
-                            </div>
 
                     <form method="POST" action="">
                         <div class="row">
