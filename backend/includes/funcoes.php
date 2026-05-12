@@ -592,7 +592,44 @@ function VagasDisponiveis()
 // ============================================Lista Atuacao============================================
 
 
-// ===========================================Cadastrar Candidato=======================================================
+
+// =========================================== Função Auxiliar: Upload de Imagens ========================================
+function uploadImagems($arquivo) {
+    // Pasta para fotos de perfil e banner
+    $diretorio = "assets/img/perfil-candidato/uploads/";
+    if (!is_dir($diretorio)) { 
+        mkdir($diretorio, 0755, true); 
+    }
+
+    $extensao = strtolower(pathinfo($arquivo['name'], PATHINFO_EXTENSION));
+    $novoNome = md5(uniqid()) . "." . $extensao; 
+    $caminhoFinal = $diretorio . $novoNome;
+
+    if (move_uploaded_file($arquivo['tmp_name'], $caminhoFinal)) {
+        return $novoNome; 
+    }
+    return false;
+}
+
+// =========================================== Função Auxiliar: Upload de Certificado ===================================
+function uploadCertificado($arquivo) {
+    // Caminho para a subpasta de certificados conforme sua estrutura
+    $diretorio = "assets/img/perfil-candidato/uploads/certificados/";
+    if (!is_dir($diretorio)) { 
+        mkdir($diretorio, 0755, true); 
+    }
+
+    $extensao = strtolower(pathinfo($arquivo['name'], PATHINFO_EXTENSION));
+    $novoNome = "cert_" . md5(uniqid()) . "." . $extensao; 
+    $caminhoFinal = $diretorio . $novoNome;
+
+    if (move_uploaded_file($arquivo['tmp_name'], $caminhoFinal)) {
+        return $novoNome; 
+    }
+    return false;
+}
+
+// =========================================== Cadastrar Candidato =======================================================
 function cadastrarCandidato($nome, $email, $telefone, $endereco, $sobre, $cargo, $experiencia, $projeto, $certificado)
 {
     try {
@@ -615,76 +652,11 @@ function cadastrarCandidato($nome, $email, $telefone, $endereco, $sobre, $cargo,
         return $conexao->lastInsertId();
     } catch (PDOException $err) {
         error_log($err->getMessage());
-        return "Erro ao cadastrar";
+        return false;
     }
 }
 
-// ===========================================Cadastrar Foto Perfil=======================================================
-function cadastrarFotoPerfil($idCandidato, $nomeFotoPerfil)
-{
-    try {
-        global $conexao;
-
-        // Atualiza a coluna id_foto_perfil na tabela tb_perfil_candidato
-        $sql = "UPDATE tb_perfil_candidato SET id_foto_perfil = :foto WHERE id = :id";
-
-        $comando = $conexao->prepare($sql);
-        $comando->bindValue(':foto', $nomeFotoPerfil);
-        $comando->bindValue(':id', $idCandidato);
-        $comando->execute();
-
-    } catch (PDOException $err) {
-        error_log($err->getMessage());
-    }
-}
-
-// ===========================================Cadastrar Foto Banner (Capa)=======================================================
-function cadastrarFotoBanner($idCandidato, $nomeBanner)
-{
-    try {
-        global $conexao;
-
-        // Atualiza a coluna id_foto_banner na tabela tb_perfil_candidato
-        $sql = "UPDATE tb_perfil_candidato SET id_foto_banner = :banner WHERE id = :id";
-
-        $comando = $conexao->prepare($sql);
-        $comando->bindValue(':banner', $nomeBanner);
-        $comando->bindValue(':id', $idCandidato);
-        $comando->execute();
-
-    } catch (PDOException $err) {
-        error_log($err->getMessage());
-    }
-}
-
-function listarPerfilCandidato() {
-    try {
-        global $conexao;
-        // Puxa todos os candidatos (ou você pode filtrar por ID se preferir)
-        $sql = "SELECT * FROM tb_perfil_candidato";
-        $comando = $conexao->prepare($sql);
-        $comando->execute();
-        return $comando->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $err) {
-        error_log($err->getMessage());
-        return [];
-    }
-}
-// Função para buscar UM candidato pelo ID (para preencher o formulário de edição)
-function listaCandidatoId($id) {
-    try {
-        global $conexao;
-        $sql = "SELECT * FROM tb_perfil_candidato WHERE id = :id";
-        $comando = $conexao->prepare($sql);
-        $comando->bindValue(':id', $id);
-        $comando->execute();
-        return $comando->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $err) {
-        return [];
-    }
-}
-
-// Função para dar o UPDATE nos dados
+// =========================================== Atualizar Dados do Candidato ==============================================
 function atualizarCandidato($id, $nome, $email, $telefone, $endereco, $sobre, $cargo, $experiencia, $projeto, $certificado) {
     try {
         global $conexao;
@@ -708,6 +680,80 @@ function atualizarCandidato($id, $nome, $email, $telefone, $endereco, $sobre, $c
         
         return $comando->execute();
     } catch (PDOException $err) {
+        error_log($err->getMessage());
         return false;
+    }
+}
+
+// =========================================== Atualizar Foto Perfil =======================================================
+function cadastrarFotoPerfil($idCandidato, $nomeFotoPerfil)
+{
+    try {
+        global $conexao;
+        $sql = "UPDATE tb_perfil_candidato SET id_foto_perfil = :foto WHERE id = :id";
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':foto', $nomeFotoPerfil);
+        $comando->bindValue(':id', $idCandidato);
+        $comando->execute();
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+    }
+}
+
+// =========================================== Atualizar Foto Banner =======================================================
+function cadastrarFotoBanner($idCandidato, $nomeBanner)
+{
+    try {
+        global $conexao;
+        $sql = "UPDATE tb_perfil_candidato SET id_foto_banner = :banner WHERE id = :id";
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':banner', $nomeBanner);
+        $comando->bindValue(':id', $idCandidato);
+        $comando->execute();
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+    }
+}
+
+// =========================================== Atualizar Arquivo Certificado ==============================================
+function cadastrarArquivoCertificado($idCandidato, $nomeCertificado)
+{
+    try {
+        global $conexao;
+        $sql = "UPDATE tb_perfil_candidato SET certificado = :cert WHERE id = :id";
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':cert', $nomeCertificado);
+        $comando->bindValue(':id', $idCandidato);
+        $comando->execute();
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+    }
+}
+
+// =========================================== Listagem e Busca ==========================================================
+function listarPerfilCandidato() {
+    try {
+        global $conexao;
+        $sql = "SELECT * FROM tb_perfil_candidato";
+        $comando = $conexao->prepare($sql);
+        $comando->execute();
+        return $comando->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return [];
+    }
+}
+
+function listaCandidatoId($id) {
+    try {
+        global $conexao;
+        $sql = "SELECT * FROM tb_perfil_candidato WHERE id = :id";
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':id', $id);
+        $comando->execute();
+        return $comando->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $err) {
+        error_log($err->getMessage());
+        return [];
     }
 }
