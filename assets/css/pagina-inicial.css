@@ -92,11 +92,10 @@ body {
     font-size: 13px;
     padding: 5px 10px;
 }
-.conteudo-extra {
+.conteudo-extra{
     display: none;
 }
-.conteudo-extra img{
-    width: 200px;
-    margin-top: 10px;
-    border-radius: 10px;
+
+.conteudo-extra.ativo{
+    display: block;
 }
