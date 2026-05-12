@@ -566,10 +566,13 @@ function VagasDisponiveis()
 
         $sql = "SELECT 
                     tb_vagas.*, 
-                    tb_empresa.nome_fantasia
+                    tb_empresa.nome_fantasia,
+                    tb_img_vaga.imagem AS imagem_vaga
                 FROM tb_vagas
                 INNER JOIN tb_empresa 
-                ON tb_vagas.id_empresa = tb_empresa.id";
+                ON tb_vagas.id_empresa = tb_empresa.id
+                LEFT JOIN tb_img_vaga
+                ON tb_vagas.id = tb_img_vaga.id_vaga";
 
         $comando = $conexao->prepare($sql);
         $comando->execute();
