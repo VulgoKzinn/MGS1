@@ -75,6 +75,7 @@ $Disponiveis = VagasDisponiveis();
 
                     <?php if (!empty($Disponivel['imagem_vaga'])): ?>
                     <img src="assets/img/empresa/uploads/<?= $Disponivel['imagem_vaga'] ?>">
+                    <?= $Disponivel['imagem_vaga'] ?>
                 <?php endif; ?>
                 
                 </div>
@@ -95,18 +96,18 @@ $Disponiveis = VagasDisponiveis();
     <?php endforeach; ?>
 
     <script>
-        function toggleTexto(btn) {
-            const card = btn.closest('.card-vaga');
-            const conteudo = card.querySelector('.conteudo-extra');
+    function toggleTexto(btn) {
+        const card = btn.closest('.card-vaga');
+        const conteudo = card.querySelector('.conteudo-extra');
 
-            if (conteudo.style.display === "block") {
-                conteudo.style.display = "none";
-                btn.innerText = "Ler mais";
-            } else {
-                conteudo.style.display = "block";
-                btn.innerText = "Ler menos";
-            }
+        if (conteudo.classList.contains('ativo')) {
+            conteudo.classList.remove('ativo');
+            btn.innerText = "Ler mais";
+        } else {
+            conteudo.classList.add('ativo');
+            btn.innerText = "Ler menos";
         }
+    }
     </script>
     <!-- Include JS -->
     <?php
