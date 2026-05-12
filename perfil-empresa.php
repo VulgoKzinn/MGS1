@@ -5,8 +5,6 @@ require_once "backend/includes/funcoes.php";
 // validaEmpresa();
 $vagas = listaVaga();
 
-
-
 ?>
 <!-- SABRINA -->
 <!DOCTYPE html>

@@ -298,12 +298,12 @@ function listachamado()
 // ============================================Lista Chamado============================================
 
 // ===========================================Cadastrar Vaga=======================================================
-function cadastrarVaga($vaga, $area_atuacao, $modalidade, $modelo_de_trabalho, $localizacao, $salario, $beneficio, $carga_horaria, $descricao, $requisitos)
+function cadastrarVaga($vaga, $area_atuacao, $modalidade, $modelo_de_trabalho, $localizacao, $salario, $beneficio, $carga_horaria, $descricao, $requisitos,$id_empresa)
 {
     try {
         global $conexao;
 
-        $sql = "INSERT INTO tb_vagas(vaga,area_atuacao,modalidade,modelo_de_trabalho,localizacao,salario,beneficio,carga_horaria,descricao,requisitos)VALUES(:vaga,:area_atuacao,:modalidade,:modelo_de_trabalho,:localizacao,:salario,:beneficio,:carga_horaria,:descricao,:requisitos)";
+        $sql = "INSERT INTO tb_vagas(vaga,area_atuacao,modalidade,modelo_de_trabalho,localizacao,salario,beneficio,carga_horaria,descricao,requisitos)VALUES(:vaga,:area_atuacao,:modalidade,:modelo_de_trabalho,:localizacao,:salario,:beneficio,:carga_horaria,:descricao,:requisitos,:id_empresa)";
 
         $comando = $conexao->prepare($sql);
         $comando->bindValue(':vaga', $vaga);
@@ -316,6 +316,7 @@ function cadastrarVaga($vaga, $area_atuacao, $modalidade, $modelo_de_trabalho, $
         $comando->bindValue(':carga_horaria', $carga_horaria);
         $comando->bindValue(':descricao', $descricao);
         $comando->bindValue(':requisitos', $requisitos);
+        $comando->bindValue(':id_empresa', $id_empresa);
 
         $comando->execute();
 
