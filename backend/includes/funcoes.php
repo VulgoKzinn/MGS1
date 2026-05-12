@@ -401,6 +401,7 @@ function listaVaga()
     } catch (PDOException $err) {
         error_log($err->getMessage());
         return "Não foi possível listar a vaga";
+         
     }
     // ANULA A CONEXAO COM O BANCO
     $conexao = null;
