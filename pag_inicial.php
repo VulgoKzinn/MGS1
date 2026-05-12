@@ -75,7 +75,6 @@ $Disponiveis = VagasDisponiveis();
 
                     <?php if (!empty($Disponivel['imagem_vaga'])): ?>
                     <img src="assets/img/empresa/uploads/<?= $Disponivel['imagem_vaga'] ?>">
-                    <?= $Disponivel['imagem_vaga'] ?>
                 <?php endif; ?>
                 
                 </div>
