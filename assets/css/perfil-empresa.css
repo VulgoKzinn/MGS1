@@ -27,12 +27,12 @@ box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* ===========BOTAO CONFIGURAÇÃO=========== */
+/* ===========BOTAO CONFIGURAÇÃO=========== */
 .config-btn{
-/* permite posicionar o botão manualmente na tela */
+
 position:absolute;
-/* move o botão para baixo da borda inferior do container */
+
 bottom:-50px;
-/* move o botão para dentro da borda direita */
 right:30px;
 
 width:45px;
@@ -44,17 +44,18 @@ display:flex;
 align-items:center;
 justify-content:center;
 
-/* define o tamanho do ícone */
 font-size:30px;
 color:#6750A4;
 
 box-shadow:0 4px 8px rgba(0,0,0,0.2);
-/* define uma animação suave de 0.2 segundos quando algo muda */
+
 transition:0.2s;
+
+/* ADICIONE ISSO */
+z-index:9999;
 }
 
 .config-btn:hover{
-/* aumenta o tamanho do botão em 10% */
 transform:scale(1.1);
 }
 

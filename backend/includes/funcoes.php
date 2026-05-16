@@ -346,7 +346,7 @@ function uploadImagem($imagem)
 {
 
     //define a pasta para upload
-    $pasta = "assets/img/empresa/vaga-empresa/uploads/";
+    $pasta = "assets/img/empresa/vaga_empresa/uploads/";
 
     //captura a extensão da imagem
     //strtolower passa a extensão para minusculo
@@ -590,16 +590,16 @@ function VagasDisponiveis()
 // ============================================Lista Atuacao============================================
 
 // ============================================Cadastro das informações do Perfil da Empresa============================================
-function adicionarPersonalizacao($nome,$slogan,$quem_somos)
+function adicionarPersonalizacao($slogan,$quem_somos)
 {
 try {
         global $conexao;
 
-        $sql = "INSERT INTO tb_perfil_empresa(nome,slogan,quem_somos)VALUES(:nome,:slogan,:quem_somos)";
+        $sql = "INSERT INTO tb_perfil_empresa(slogan,quem_somos)VALUES(:slogan,:quem_somos)";
 
         $comando = $conexao->prepare($sql);
-        $comando->bindValue(':nome', $nome);
         $comando->bindValue(':slogan', $slogan);
+        $comando->bindValue(':quem_somos', $quem_somos);
         
         $comando->execute();
 
@@ -613,55 +613,6 @@ try {
 }
 // ============================================Cadastro das informações do Perfil da Empresa============================================
 
-// ============================================Cadastra a imagem do perfil da empresa============================================
-
-
-
-// ===========================================Função upload imagem Empresa=======================================================
-function uploadImagem($imagem)
-{
-
-    //define a pasta para upload
-    $pasta = "assets/img/empresa/empresa/uploads/";
-
-    //captura a extensão da imagem
-    //strtolower passa a extensão para minusculo
-    $extensao = strtolower(pathinfo($imagem['name'], PATHINFO_EXTENSION));
-
-    //gera um nome aleatorio para imagem e junta com a extensão
-    //ponto é soma
-    $nomeUpload = md5(uniqid()) . '.' . $extensao;
-
-    //faz o upload da imagem
-    move_uploaded_file($imagem['tmp_name'], $pasta . $nomeUpload);
-
-    //retorna o nome da imagem(hash)
-    return $nomeUpload;
-}
-// ===========================================Função upload imagem Empresa=======================================================
-
-
-function adicionarImagemPerfilEmpresa($idEmpresa, $empresaImagemUpload)
-{
-try {
-        global $conexao;
-
-        $sql = "INSERT INTO tb_perfil_empresa_img(perfil,capa,descricao,id_empresa)VALUES(:nomeImagemUpload,:idEmpresa)";
-
-        $comando = $conexao->prepare($sql);
-
-        $comando->bindValue(':nomeImagemUpload', $empresaImagemUpload);
-        $comando->bindValue(':idEmpresa', $idEmpresa);
-        $comando->execute();
-
-        header('Location: perfil-empresa.php');
-    } catch (PDOException $err) {
-        error_log($err->getMessage());
-        return "Erro ao cadastrar";
-    }
-}
-// ============================================Cadastra a imagem do perfil da empresa============================================
-
 // ============================================Lista os Dados do Perfil============================================
 
 function listaDadosPerfil()
@@ -673,14 +624,14 @@ function listaDadosPerfil()
         tb_empresa.rzsocial,
         tb_perfil_empresa_img.perfil,
         tb_perfil_empresa_img.capa,
-        tb_perfil_empresa_img.descricao,
+        tb_perfil_empresa_img.descricao
         FROM tb_perfil_empresa
-        INNER JOIN tb_empresa ON tb_empresa.id = tb_perfil_empresa.id
-        INNER JOIN tb_perfil_empresa_img ON tb_perfil_empresa_img.id_empresa = tb_perfil_empresa.id";
+        LEFT JOIN tb_empresa ON tb_empresa.id = tb_perfil_empresa.id_empresa
+        LEFT JOIN tb_perfil_empresa_img ON tb_perfil_empresa_img.id_empresa = tb_perfil_empresa.id_empresa";
 
         $comando = $conexao->prepare($sql);
         $comando->execute();
-        return $comando->fetchAll(PDO::FETCH_ASSOC);
+        return $comando->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $err) {
         error_log($err->getMessage());
         return "Não foi possível listar os dados!";
@@ -689,3 +640,59 @@ function listaDadosPerfil()
     $conexao = null;
 }
 // ============================================Lista os Dados do Perfil============================================
+
+// ===========================================Função upload imagem perfil empresa=========================================
+function empresaImagemUpload($imagem, $pasta)
+{
+    // verifica se enviou imagem
+    if (empty($imagem['name'])) {
+        return null;
+    }
+
+    // extensão
+    $extensao = strtolower(
+        pathinfo($imagem['name'], PATHINFO_EXTENSION)
+    );
+
+    // nome aleatório
+    $nomeUpload = md5(uniqid()) . '.' . $extensao;
+
+    // upload
+    move_uploaded_file(
+        $imagem['tmp_name'],
+        $pasta . $nomeUpload
+    );
+
+    // retorna nome
+    return $nomeUpload;
+}
+// ===========================================Função upload imagem perfil empresa=========================================
+
+// ===========================================Função cadastra imagem perfil empresa=========================================
+
+function adicionarImagemPerfilEmpresa($imgPerfil,$imgCapa,$imgDescricao)
+{
+    try {
+
+        global $conexao;
+
+        $sql = "INSERT INTO tb_perfil_empresa_img(perfil,capa,descricao)VALUES(:perfil,:capa,:descricao)";
+
+        $comando = $conexao->prepare($sql);
+        $comando->bindValue(':perfil', $imgPerfil);
+        $comando->bindValue(':capa', $imgCapa);
+        $comando->bindValue(':descricao', $imgDescricao);
+        $comando->execute();
+
+        header('Location: perfil-empresa.php');
+
+        exit;
+
+    } catch (PDOException $err) {
+
+        error_log($err->getMessage());
+
+        return "Erro ao cadastrar imagens";
+    }
+}
+// ===========================================Função cadastra imagem perfil empresa=========================================

@@ -5,23 +5,24 @@ require_once "backend/includes/funcoes.php";
 session_start();
 //caso seja clicado no botão adicionar a função é executada
 if (isset($_POST['adicionar'])) {
-    $nome = filter_input(INPUT_POST, 'nome');
+    // pega o ID da empresa logada
     $slogan = filter_input(INPUT_POST, 'slogan');
     $quem_somos = filter_input(INPUT_POST, 'quem_somos');
     
-    
 
-    $idEmpresa = adicionarPersonalizacao($nome, $slogan, $quem_somos,);
+    adicionarPersonalizacao($slogan, $quem_somos);
 
-    //executa a função de upload da imagem, enviando o id do produto e a imagem para upload
-    $empresaImagemUpload = uploadImagem($_FILES['imagem']);
+    // UPLOADS IMAGENS
+    $imgPerfil = empresaImagemUpload($_FILES['imagem_perfil'],"assets/img/empresa/perfil_empresa/uploads");
 
-    if ($empresaImagemUpload) {
-        adicionarImagemPerfilEmpresa($idEmpresa, $empresaImagemUpload);
-    } else {
-        echo "Erro no upload da imagem";
-    }
+    $imgCapa = empresaImagemUpload($_FILES['imagem_capa'],"assets/img/empresa/capa_empresa/uploads/");
+
+    $imgDescricao = empresaImagemUpload($_FILES['foto_empresa'],"assets/img/empresa/descricao_empresa/uploads/");
+
+    // INSERT IMAGENS
+    adicionarImagemPerfilEmpresa($imgPerfil,$imgCapa,$imgDescricao);
 }
+
 
 ?>
 
@@ -74,14 +75,14 @@ if (isset($_POST['adicionar'])) {
             <!-- FOTO PERFIL -->
             <div class="col-md-4">
 
-                <label for="imagem-perfil" class="form-label fw-semibold">
+                <label for="imagem_perfil" class="form-label fw-semibold">
                     Foto Perfil
                 </label>
 
                 <input class="form-control"
                     type="file"
-                    name="imagem-perfil"
-                    id="imagem-perfil"
+                    name="imagem_perfil"
+                    id="imagem_perfil"
                     accept="image/*">
 
             </div>
@@ -89,14 +90,14 @@ if (isset($_POST['adicionar'])) {
             <!-- FOTO CAPA -->
             <div class="col-md-4">
 
-                <label for="imagem-capa" class="form-label fw-semibold">
+                <label for="imagem_capa" class="form-label fw-semibold">
                     Foto Capa
                 </label>
 
                 <input class="form-control"
                     type="file"
-                    name="imagem-capa"
-                    id="imagem-capa"
+                    name="imagem_capa"
+                    id="imagem_capa"
                     accept="image/*">
 
             </div>
@@ -104,14 +105,14 @@ if (isset($_POST['adicionar'])) {
             <!-- FOTO EMPRESA -->
             <div class="col-md-4">
 
-                <label for="foto-empresa" class="form-label fw-semibold">
+                <label for="foto_empresa" class="form-label fw-semibold">
                     Foto da Empresa
                 </label>
 
                 <input class="form-control"
                     type="file"
-                    name="foto-empresa"
-                    id="foto-empresa"
+                    name="foto_empresa"
+                    id="foto_empresa"
                     accept="image/*">
 
             </div>
@@ -119,13 +120,13 @@ if (isset($_POST['adicionar'])) {
             <!-- QUEM SOMOS -->
             <div class="col-12">
 
-                <label for="quem-somos" class="form-label fw-semibold">
+                <label for="quem_somos" class="form-label fw-semibold">
                     Quem Somos?
                 </label>
 
                 <textarea class="form-control"
-                    name="quem-somos"
-                    id="quem-somos"
+                    name="quem_somos"
+                    id="quem_somos"
                     rows="6"
                     required></textarea>
 
@@ -158,7 +159,7 @@ if (isset($_POST['adicionar'])) {
     require_once 'assets/templates/js.php';
     ?>
 <script>
-    document.getElementById('imagem').addEventListener('change', function(event) {
+    document.getElementById('imagem_perfil').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const preview = document.getElementById('previewImagem');
 
