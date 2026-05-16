@@ -588,3 +588,33 @@ function VagasDisponiveis()
     }
 }
 // =============================================lISTA VAGAS======================================
+
+// =============================================Faz salvar o nome, telefone e endereço do usuario======================================
+function cadastrarPerfilCandidato($id_login, $nome, $telefone, $endereco)
+{
+    try {
+
+        global $conexao;
+
+        $sql = "INSERT INTO tb_perfil_candidato(id_login,nome,telefone,endereco)VALUES(:id_login,:nome,:telefone,:endereco)";
+
+        $comando = $conexao->prepare($sql);
+
+        $comando->bindValue(':id_login', $id_login);
+        $comando->bindValue(':nome', $nome);
+        $comando->bindValue(':telefone', $telefone);
+        $comando->bindValue(':endereco', $endereco);
+
+        return $comando->execute();
+
+    } catch (PDOException $err) {
+
+        error_log($err->getMessage());
+
+        echo $err->getMessage();
+
+        return false;
+    }
+}
+// =============================================Faz salvar o nome, telefone e endereço do usuario======================================
+

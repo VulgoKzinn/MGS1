@@ -3,40 +3,65 @@
 session_start(); // inicia a sessão
 require_once __DIR__ . "/../backend/includes/funcoes.php";
 
+
+
 $mensagem = '';
-if (isset($_POST['cadastrar'])) {
-    $email =        filter_input(INPUT_POST, 'email');
-    // captura a senha preenchido pelo usuario
-    $senha =  filter_input(INPUT_POST, 'senha');
-    $confirma =  filter_input(INPUT_POST, 'confirma');
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $email = filter_input(INPUT_POST, 'email');
+
+    $senha = filter_input(INPUT_POST, 'senha');
+
+    $confirma = filter_input(INPUT_POST, 'confirma');
+
+    $nome = filter_input(INPUT_POST, 'nome');
+
+    $telefone = filter_input(INPUT_POST, 'telefone');
+
+    $endereco = filter_input(INPUT_POST, 'endereco');
+
     $empresa = isset($_POST['empresa']) ? 1 : 0;
 
-    if ($senha == '' || $confirma == ''){
+    if ($senha == '' || $confirma == '') {
+
         $mensagem = 'Preencha a senha!';
+
     } elseif ($senha !== $confirma) {
+
         $mensagem = 'Senhas não conferem!';
+
     } else {
+
         $retorno = validaEmail($email, $senha, $empresa);
 
-if (is_numeric($retorno)) {
+        if (is_numeric($retorno)) {
 
-    $id_login = $retorno;
+            $id_login = $retorno;
 
-    if ($empresa == 1) {
+            if ($empresa == 1) {
 
-        $_SESSION['id_login'] = $id_login;
-        header("Location: auth/cadastro-empresa.php");
-        exit;
+                $_SESSION['id_login'] = $id_login;
 
-    } else {
+                header("Location: cadastro-empresa.php");
+                exit;
 
-        header("Location: auth/login.php?cadastro=sucesso");
-        exit;
-    }
+            } else {
 
-} else {
-    $mensagem = $retorno;
-}
+                cadastrarPerfilCandidato(
+                    $id_login,
+                    $nome,
+                    $telefone,
+                    $endereco
+                );
+
+                header("Location: login.php");
+                exit;
+            }
+
+        } else {
+
+            $mensagem = $retorno;
+        }
     }
 }
 
@@ -62,7 +87,7 @@ if (is_numeric($retorno)) {
     </div>
     <!-- Formulário -->
     <main id="CadCand">
-        <form action="" method="post" class="p-4 col-md-6 mx-auto">
+        <form action="" method="post" id="formCadastro" class="p-4 col-md-6 mx-auto">
             <h2 class="text-center mb-4">Crie sua Conta</h2>
 
             <!-- Email -->
@@ -97,6 +122,11 @@ if (is_numeric($retorno)) {
                 </div>
             <?php endif; ?>
 
+            <!-- Campos extras para realização do model para login -->
+            <input type="hidden" name="nome" id="nome">
+            <input type="hidden" name="telefone" id="telefone">
+            <input type="hidden" name="endereco" id="endereco">
+
             <div class="text-end">
                 <button type="submit" class="btn btn-success w-100" name="cadastrar" abs>
                     Criar Conta
@@ -105,12 +135,110 @@ if (is_numeric($retorno)) {
         </form>
     </main>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalCadastro" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Complete seu cadastro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label>Nome</label>
+                        <input type="text" class="form-control" id="modalNome">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Telefone</label>
+                        <input type="tel" class="form-control" id="modalTelefone" maxlength="15">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Endereço</label>
+                        <input type="text" class="form-control" id="modalEndereco">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="button" class="btn btn-success" id="finalizarCadastro">
+                        Finalizar Cadastro
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Include JS -->
     <?php
     require_once '../assets/templates/js.php';
     ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const form = document.getElementById("formCadastro");
+
+        let modalPreenchido = false;
+
+        form.addEventListener("submit", function(e) {
+
+            const empresa = document.getElementById("empresa").checked;
+
+            // Se NÃO for empresa
+            if (!empresa && !modalPreenchido) {
+
+                e.preventDefault();
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById('modalCadastro')
+                );
+
+                modal.show();
+            }
+
+        });
+
+        document.getElementById("finalizarCadastro")
+            .addEventListener("click", function() {
+
+                let nome = document.getElementById("modalNome").value;
+                let telefone = document.getElementById("modalTelefone").value;
+                let endereco = document.getElementById("modalEndereco").value;
+
+                if (nome == '' || telefone == '' || endereco == '') {
+
+                    alert("Preencha todos os campos!");
+                    return;
+                }
+
+                // joga nos hidden inputs
+                document.getElementById("nome").value = nome;
+                document.getElementById("telefone").value = telefone;
+                document.getElementById("endereco").value = endereco;
+
+                // libera envio
+                modalPreenchido = true;
+
+                // envia form
+                form.submit();
+
+            });
+
+        // máscara telefone
+        $(document).ready(function() {
+            $('#modalTelefone').mask('(00) 00000-0000');
+        });
+    </script>
+
+
 </body>
-                
+
 </html>
