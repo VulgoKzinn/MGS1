@@ -79,7 +79,7 @@ body {
 }
 .card-vaga {
     max-width: 900px;   /* controla a largura */
-    margin: 0 auto;     /* centraliza */
+    margin: 20 auto;     /* centraliza */
     border-radius: 20px;
     overflow: hidden;
     
