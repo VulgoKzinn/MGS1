@@ -413,6 +413,8 @@ function listaVaga($id_empresa)
     // ANULA A CONEXAO COM O BANCO
     $conexao = null;
 }
+// ===========================================Lista as Vagas=======================================================
+
 
 // ===========================================Traz informações da Vaga=======================================================
 function listaVagaId($idVaga)
@@ -634,7 +636,7 @@ function listaDadosPerfil($id_empresa)
         tb_perfil_empresa_img.descricao
         FROM tb_perfil_empresa
         LEFT JOIN tb_empresa ON tb_empresa.id = tb_perfil_empresa.id_empresa
-        LEFT JOIN tb_perfil_empresa_img ON tb_perfil_empresa_img.id_empresa = tb_perfil_empresa.id_empresa WHERE tb_perfil_empresa.id_empresa = :id_empresa";
+        LEFT JOIN tb_perfil_empresa_img ON tb_perfil_empresa_img.id = tb_perfil_empresa.id_empresa WHERE tb_perfil_empresa.id_empresa = :id_empresa";
 
         $comando = $conexao->prepare($sql);
 
@@ -680,18 +682,19 @@ function empresaImagemUpload($imagem,$pasta)
 
 // ===========================================Função cadastra imagem perfil empresa=========================================
 
-function adicionarImagemPerfilEmpresa($imgPerfil,$imgCapa,$imgDescricao)
+function adicionarImagemPerfilEmpresa($imgPerfil,$imgCapa,$imgDescricao,$id_empresa)
 {
     try {
 
         global $conexao;
 
-        $sql = "INSERT INTO tb_perfil_empresa_img(perfil,capa,descricao)VALUES(:perfil,:capa,:descricao)";
+        $sql = "INSERT INTO tb_perfil_empresa_img(perfil,capa,descricao,id_empresa)VALUES(:perfil,:capa,:descricao,:id_empresa)";
 
         $comando = $conexao->prepare($sql);
         $comando->bindValue(':perfil', $imgPerfil);
         $comando->bindValue(':capa', $imgCapa);
         $comando->bindValue(':descricao', $imgDescricao);
+        $comando->bindValue(':id_empresa', $id_empresa);
         $comando->execute();
 
         header('Location: perfil-empresa.php');

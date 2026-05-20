@@ -15,14 +15,14 @@ if (isset($_POST['adicionar'])) {
     adicionarPersonalizacao($slogan, $quem_somos, $id_empresa);
 
     // UPLOADS IMAGENS
-    $imgPerfil = empresaImagemUpload($_FILES['imagem_perfil'],"assets/img/empresa/perfil_empresa/uploads");
+    $imgPerfil = empresaImagemUpload($_FILES['imagem_perfil'],"assets/img/empresa/perfil_empresa/uploads/");
 
     $imgCapa = empresaImagemUpload($_FILES['imagem_capa'],"assets/img/empresa/capa_empresa/uploads/");
 
     $imgDescricao = empresaImagemUpload($_FILES['foto_empresa'],"assets/img/empresa/descricao_empresa/uploads/");
 
     // INSERT IMAGENS
-    adicionarImagemPerfilEmpresa($imgPerfil,$imgCapa,$imgDescricao);
+    adicionarImagemPerfilEmpresa($imgPerfil,$imgCapa,$imgDescricao,$id_empresa);
 }
 
 
